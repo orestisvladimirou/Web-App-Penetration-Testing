@@ -1,0 +1,23 @@
+# Never commit raw proxy/session captures or potentially sensitive exports
+*.har
+*.session
+*.session.*
+*.sqlite
+*.sqlite3
+*.db
+*.log
+*.pem
+*.key
+*.p12
+*.pfx
+.env
+.env.*
+!.env.example
+.zap/
+scans/raw/
+evidence/raw/
+reports/raw/
+*.bak
+*.tmp
+Thumbs.db
+.DS_Store
