@@ -79,7 +79,9 @@ The recovery endpoint returns structurally different data for existing versus no
 ## Evidence
 
 - [F05 password recovery API comparison](../evidence/F05-password-recovery-api-comparison.md) — sanitized transcript of observed ZAP and PowerShell response evidence, with explicit source limitations.
-- Original UI/ZAP/PowerShell screenshots were shared during lab testing but **are not yet uploaded as PNGs to this repository**.
+- [Existing-account PowerShell response](../evidence/F05-existing-account-response-redacted.png) — original HTTP 200 and nonempty security question response screenshot.
+- [Nonexistent-account ZAP response](../evidence/F05-nonexistent-account-response-redacted.png) — original HTTP 200 and `{}` response screenshot.
+- These are cropped source screenshots of the observed responses; UI screenshots were also reviewed in conversation but are not part of this GitHub evidence set.
 
 ## References
 
