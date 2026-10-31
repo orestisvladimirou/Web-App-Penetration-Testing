@@ -9,7 +9,7 @@ A structured, **authorized educational penetration testing assessment** of [OWAS
 | Item | Details |
 |---|---|
 | Target | OWASP Juice Shop — `http://localhost:3000` |
-| Environment | Windows 11, Docker Desktop, local container |
+| Environment | Windows 11, Docker Desktop, local container; Docker 29.9.2 (build a82e528) |
 | Testing tool | OWASP ZAP 2.17.0, browser, PowerShell/`curl.exe` |
 | Testing approach | Scoped passive reconnaissance and manually validated vulnerability testing |
 | Scope | Local application only; external browser services explicitly excluded |
@@ -32,6 +32,7 @@ A structured, **authorized educational penetration testing assessment** of [OWAS
 ## Methodology and documentation
 
 - [Rules of engagement and scope](scope/rules-of-engagement.md)
+- [Docker environment fingerprint and version checks](scope/environment-fingerprint.md)
 - [Testing methodology and validation standards](methodology/testing-methodology.md)
 - [Interim penetration test report](reports/assessment-report-draft.md)
 - [Evidence handling guidance](evidence/README.md)
@@ -50,7 +51,7 @@ docker ps --filter "name=juice-shop-lab"
 
 Navigate to <http://localhost:3000>. If the container already exists but is stopped, use `docker start juice-shop-lab`.
 
-For repeatable research, record the exact image version or digest before testing; the initial assessment used a pulled image whose digest was not yet saved.
+**Recorded environment (31 October 2026):** The container was created from `bkimminich/juice-shop` (no explicit tag). Its verified **local image ID** is `sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4`; Docker is version `29.9.2`, build `a82e528`; ZAP is version `2.17.0`. This image ID is **not** a registry manifest digest, and the exact Juice Shop application version is not yet recorded. See the [environment fingerprint](scope/environment-fingerprint.md) for capture commands and remaining version checks.
 
 **ZAP scope:** Include only `^http://localhost:3000(?:/.*)?$` in the dedicated context, put only that context in scope, and select **Protected Mode** before any active scanning. The assessment so far used manual browsing, passive capture, and a targeted local login test.
 
@@ -61,7 +62,8 @@ For repeatable research, record the exact image version or digest before testing
 - [x] Manually confirm an authentication bypass via SQL injection
 - [x] Validate and downgrade the initial CORS scanner finding to an observation
 - [ ] Save and redact screenshots, including a negative control
-- [ ] Record version information and image digest
+- [x] Record Docker CLI version, configured image reference and local image ID
+- [ ] Verify Juice Shop application version and registry manifest digest; pin exact version for reproducibility
 - [x] Demonstrate cross-account basket disclosure (IDOR) using two disposable lab accounts
 - [x] Document the confirmed IDOR finding
 - [ ] Capture redacted proof of Account B session attribution for the IDOR request
