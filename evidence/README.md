@@ -2,7 +2,11 @@
 
 This directory is reserved for **sanitized, human-reviewed** assessment evidence.
 
-Suggested filenames (not yet uploaded):
+## Uploaded evidence
+
+- [F02-cross-account-request-redacted.png](F02-cross-account-request-redacted.png) — cross-account basket request and response; redacted image uploaded 31 October 2026. **Redaction should be reviewed again before publication.**
+
+## Planned evidence (not yet uploaded):
 
 - `F01-login-request-redacted.png`
 - `F01-login-response-redacted.png`
@@ -10,7 +14,6 @@ Suggested filenames (not yet uploaded):
 - `F01-invalid-login-control-redacted.png`
 - `F02-account-a-basket-redacted.png`
 - `F02-account-b-basket-redacted.png`
-- `F02-cross-account-request-redacted.png`
 
 Before adding evidence:
 1. Redact JWTs, bearer tokens, cookies, Authorization headers, real credentials, identifiers and unrelated personal information.
