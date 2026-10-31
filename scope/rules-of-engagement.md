@@ -1,8 +1,8 @@
 # Rules of Engagement and Scope
 
 **Assessment:** OWASP Juice Shop — authorized local training environment  
-**Assessment date:** 30 October 2026 (ongoing)  
-**Status:** Educational self-assessment; not a third-party engagement
+**Assessment dates:** 30–31 October 2026  
+**Status:** Completed local educational self-assessment; final report issued 31 October 2026; not a third-party engagement
 
 ## Authorization
 
@@ -35,7 +35,7 @@ The tester owns and operates the intentionally vulnerable OWASP Juice Shop Docke
 ## Constraints and limitations
 
 - This is a deliberately insecure **training application**. Findings are not evidence of flaws in a production business service.
-- Current findings are from manual inspection of a local instance; application version/image digest has not yet been recorded.
+- Findings are from manual inspection of a local instance; Juice Shop **20.3.0** and the recorded Docker repository digest are documented in the [environment fingerprint](environment-fingerprint.md). A clean-environment reproduction remains untested.
 - No destructive exploitation, persistence, or data exfiltration is within scope.
 - An automated scanner alert is not considered a confirmed vulnerability until evidence and impact are reviewed.
 
