@@ -74,7 +74,7 @@ Both the public homepage and product-search API returned `Access-Control-Allow-O
 - Upload a sanitized screenshot of the observed failed-login negative control (401 Unauthorized) for the SQL injection finding.
 - Save sanitized evidence tying the IDOR Requester session to Account B without exposing authentication tokens.
 - Documented F-03 negative follow-up: no JavaScript alert appeared in Incognito after dismissing the welcome dialog and refreshing; only iframe rendering via the URL was observed. Avoid claiming cross-session script execution without proof.
-- Save sanitized /ftp/ directory and acquisitions screenshots plus the PowerShell screenshot documenting the cookie-free check; the directory index request included a curl error 18 despite HTTP 200.
+- F-04 directory, acquisitions, legal, and PowerShell screenshots are uploaded and linked to the finding. The directory index request included a curl error 18 despite HTTP 200.
 - Record the exact target image digest and application version.
 - Consider additional authorized access-control and injection scenarios, avoiding destructive operations.
 - Apply a consistent severity framework and calculate CVSS vectors when appropriate.
