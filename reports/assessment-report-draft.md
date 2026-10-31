@@ -9,7 +9,7 @@
 
 An initial manual assessment of a deliberately vulnerable training web application was conducted using Docker, browser exploration, OWASP ZAP passive capture and focused HTTP validation.
 
-**Three behaviors were confirmed in the training lab:** SQL injection bypassed administrator authentication (High), an authenticated user accessed another user's basket (Medium), and untrusted search input was rendered as active content in a DOM XSS proof of concept (final severity pending evaluation of cross-user triggering). Risk ratings are qualitative and provisional.
+**Six technical findings are documented in the local training lab:** SQL injection administrator-login bypass (High), cross-account basket IDOR (Medium), DOM XSS proof of concept (severity under review), unauthenticated confidential-marked document disclosure (Medium), password-recovery account enumeration (Low), and administrator-role mass assignment (High). Severity ratings are qualitative and provisional; demonstrated effects and limitations are specified in the respective technical findings.
 
 A further finding, F-04, records a browsable /ftp/ directory and an acquisitions document explicitly marked confidential. A credential-free PowerShell test has since confirmed HTTP 200 and confidential-marked content for `acquisitions.md`. The `/ftp/` index returned HTTP 200 with a curl error 18 incomplete-transfer warning; the browser screenshot separately shows the listing. An additional finding, F-05, confirms that an unauthenticated recovery endpoint distinguishes an existing account from a nonexistent one through its response body, revealing the account's security question (Low, provisional). F-06 demonstrates that public registration accepted `role:admin` and returned a new account with that elevated role; the Administration UI was also rendered while logged in under the test account. An ordinary customer subsequently received the application's 403 denial message at the same route; F-06 therefore demonstrates a meaningful role-based access difference (High, provisional). One additional CORS configuration observation was recorded. Its security impact has **not** been demonstrated, so it is not counted as an exploitable finding.
 
@@ -110,6 +110,7 @@ Both the public homepage and product-search API returned `Access-Control-Allow-O
 - Consider additional authorized access-control and injection scenarios, avoiding destructive operations.
 - Apply a consistent severity framework and calculate CVSS vectors when appropriate.
 - Retest remediation only if a patched target is available.
+- Complete the [publication readiness checklist](publication-readiness-checklist.md), including redacted source evidence for F-01/F-06 and a final secrets review.
 - Convert this draft to a final report after completing and reviewing the assessment.
 
 ## Disclaimer
