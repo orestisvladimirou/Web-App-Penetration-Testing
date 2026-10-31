@@ -8,6 +8,11 @@ This directory is reserved for **sanitized, human-reviewed** assessment evidence
 - [F03-dom-xss-search-redacted.png](F03-dom-xss-search-redacted.png) — original search input, injected iframe and completion banner; file verified on GitHub 31 October 2026.
 - [F03-incognito-url-reproduction.png](F03-incognito-url-reproduction.png) — crafted search URL and iframe rendering in a separate Incognito session; file verified on GitHub 31 October 2026.
 
+- [F04-ftp-directory-listing.png](F04-ftp-directory-listing.png) — directory index and filenames; upload verified 31 October 2026.
+- [F04-confidential-acquisitions.png](F04-confidential-acquisitions.png) — confidential-marked document; upload verified 31 October 2026.
+- [F04-unauthenticated-verification.png](F04-unauthenticated-verification.png) — credential-free HTTP checks including an incomplete-transfer warning for the directory; upload verified 31 October 2026.
+- [F04-legal-document.png](F04-legal-document.png) — initial terms-of-use route; upload verified 31 October 2026.
+
 ## Planned evidence (not yet uploaded):
 
 - `F01-login-request-redacted.png`
@@ -16,8 +21,6 @@ This directory is reserved for **sanitized, human-reviewed** assessment evidence
 - `F01-invalid-login-control-redacted.png`
 - `F02-account-a-basket-redacted.png`
 - `F02-account-b-basket-redacted.png`
-- `F04-ftp-directory-listing.png`
-- `F04-confidential-acquisitions.png`
 
 Before adding evidence:
 1. Redact JWTs, bearer tokens, cookies, Authorization headers, real credentials, identifiers and unrelated personal information.
