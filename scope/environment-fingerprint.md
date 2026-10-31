@@ -13,8 +13,8 @@
 | Docker CLI version | `29.9.2` |
 | Docker CLI build | `a82e528` |
 | ZAP version | `2.17.0` (observed in assessment screenshots) |
-| Juice Shop application version | **Not yet verified** |
-| Registry manifest digest (`RepoDigests`) | **Not yet verified** |
+| Juice Shop application version | **20.3.0** (reported by the running instance) |
+| Repository digest (`RepoDigests`) | `bkimminich/juice-shop@sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4` (reported by local Docker image inspection) |
 
 ## Collection commands and observed output
 
@@ -35,16 +35,28 @@ docker --version
 - `.Image` identifies the **local image object/configuration** used to create the container. This is **not interchangeable** with the registry's manifest digest and must not be presented as a pinned pullable `repository@sha256:...` value without verification.
 - A reproducible lab setup should **pin a released image tag or a verified manifest digest**. Rerunning `docker pull bkimminich/juice-shop` without pinning could fetch a newer image and alter the behavior, so the quick-start README alone does not yet guarantee a byte-for-byte identical environment.
 
-## Outstanding reproducibility checks
+## Registry digest and application version — verified on 31 October 2026
 
 Run these read-only commands against the user's local machine:
 
 ```powershell
 docker image inspect bkimminich/juice-shop --format "{{json .RepoDigests}}"
+# ["bkimminich/juice-shop@sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4"]
+
 curl.exe -s "http://localhost:3000/rest/admin/application-version"
+# {"version":"20.3.0"}
 ```
 
-The first may expose a registry manifest digest if the image retains one; the second may report the running application version. **Do not fill in either field until the actual output has been verified.**
+Both commands were observed running successfully on 31 October 2026. The `RepoDigests` output happened to report the **same hexadecimal SHA-256 value** as the local image ID; these are still conceptually different Docker fields, and the repository-qualified digest above comes from `RepoDigests`, **not** an assumption that any local image ID is a pullable digest.
+
+### Pinned reproduction command
+
+```powershell
+docker pull bkimminich/juice-shop@sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4
+docker run -d --name juice-shop-lab -p 127.0.0.1:3000:3000 bkimminich/juice-shop@sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4
+```
+
+Use this on a machine where `juice-shop-lab` does not already exist. Do **not** rerun the container creation command against the existing local assessment without planning for preserving lab state. Docker registry/platform compatibility and successful pull on a second system have not yet been tested.
 
 ## Evidence handling
 
