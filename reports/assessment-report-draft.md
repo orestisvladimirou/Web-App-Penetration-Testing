@@ -11,7 +11,7 @@ An initial manual assessment of a deliberately vulnerable training web applicati
 
 **Three behaviors were confirmed in the training lab:** SQL injection bypassed administrator authentication (High), an authenticated user accessed another user's basket (Medium), and untrusted search input was rendered as active content in a DOM XSS proof of concept (final severity pending evaluation of cross-user triggering). Risk ratings are qualitative and provisional.
 
-A further finding, F-04, records a browsable /ftp/ directory and an acquisitions document explicitly marked confidential. A credential-free PowerShell test has since confirmed HTTP 200 and confidential-marked content for `acquisitions.md`. The `/ftp/` index returned HTTP 200 with a curl error 18 incomplete-transfer warning; the browser screenshot separately shows the listing. One additional CORS configuration observation was recorded. Its security impact has **not** been demonstrated, so it is not counted as an exploitable finding.
+A further finding, F-04, records a browsable /ftp/ directory and an acquisitions document explicitly marked confidential. A credential-free PowerShell test has since confirmed HTTP 200 and confidential-marked content for `acquisitions.md`. The `/ftp/` index returned HTTP 200 with a curl error 18 incomplete-transfer warning; the browser screenshot separately shows the listing. An additional finding, F-05, confirms that an unauthenticated recovery endpoint distinguishes an existing account from a nonexistent one through its response body, revealing the account's security question (Low, provisional). One additional CORS configuration observation was recorded. Its security impact has **not** been demonstrated, so it is not counted as an exploitable finding.
 
 ## Results summary
 
@@ -21,6 +21,7 @@ A further finding, F-04, records a browsable /ftp/ directory and an acquisitions
 | F-02 | Broken access control — cross-account basket disclosure | Medium (qualitative) | Confirmed |
 | F-03 | DOM XSS in product search | Severity under review; proof of concept confirmed | Confirmed local behavior |
 | F-04 | Exposed file index and confidential-marked acquisitions document | Medium (provisional) | Unauthenticated document retrieval confirmed; Medium provisional |
+| F-05 | Account enumeration via password recovery | Low (provisional) | Confirmed |
 | O-01 | Permissive CORS response policy | Observation, no demonstrated exploitation | Recorded |
 
 ## Scope
@@ -64,6 +65,12 @@ A terms-of-use link exposed the /ftp/ path. Its directory listing displayed file
 
 **Recommended fix:** remove sensitive and backup artifacts from public paths, disable unneeded index listings, and enforce server-side authorization for restricted documents.
 
+### F-05 — Password recovery account enumeration
+
+The `GET /rest/user/security-question?email=...` endpoint responded to a registered disposable email with a security question object (including `Mother's maiden name?`), while a nonexistent email returned `{}`. Both HTTP responses were 200 OK and the browser reflected the difference in its form state. A fresh credential-free PowerShell request confirmed the existing-account JSON. **No account takeover or password reset was demonstrated.** See [F-05](../findings/F05-account-enumeration-password-recovery.md) and [sanitized response comparison](../evidence/F05-password-recovery-api-comparison.md).
+
+**Recommended fix:** use non-enumerating responses and secure, token-based recovery with appropriate rate limits; avoid exposing security questions before verification.
+
 ### O-01 — Permissive CORS response policy
 
 Both the public homepage and product-search API returned `Access-Control-Allow-Origin: *`; the assessed responses did not advertise credentialed cross-origin access. Exploitable impact not established. See [O-01](../observations/O01-cors-configuration.md).
@@ -75,6 +82,7 @@ Both the public homepage and product-search API returned `Access-Control-Allow-O
 - Save sanitized evidence tying the IDOR Requester session to Account B without exposing authentication tokens.
 - Documented F-03 negative follow-up: no JavaScript alert appeared in Incognito after dismissing the welcome dialog and refreshing; only iframe rendering via the URL was observed. Avoid claiming cross-session script execution without proof.
 - F-04 directory, acquisitions, legal, and PowerShell screenshots are uploaded and linked to the finding. The directory index request included a curl error 18 despite HTTP 200.
+- F-05 sanitized response comparison has been committed; original F-05 screenshots have not been uploaded.
 - Record the exact target image digest and application version.
 - Consider additional authorized access-control and injection scenarios, avoiding destructive operations.
 - Apply a consistent severity framework and calculate CVSS vectors when appropriate.
