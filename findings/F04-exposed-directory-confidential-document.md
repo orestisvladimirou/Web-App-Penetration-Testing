@@ -75,10 +75,10 @@ The application exposes files in a static `/ftp/` location and permits listing o
 
 | Evidence | Observation | Status |
 |---|---|---|
-| F04-01 | Terms document displayed at `/ftp/legal.md` | Screenshot shared in conversation; not yet uploaded to GitHub |
-| F04-02 | `/ftp/` directory listing and internal-looking filenames | Screenshot shared in conversation; not yet uploaded to GitHub |
-| F04-03 | `/ftp/acquisitions.md` confidential-marked document displayed | Screenshot shared in conversation; not yet uploaded to GitHub |
-| F04-04 | Credential-free PowerShell checks: document HTTP 200 plus confidential text; directory HTTP 200 with curl error 18 (incomplete response) | **Observed and reviewed in conversation on 31 October 2026; screenshot not yet uploaded to GitHub** |
+| F04-01 | Terms document displayed at `/ftp/legal.md` | [F04-legal-document.png](../evidence/F04-legal-document.png) — uploaded and verified on GitHub |
+| F04-02 | `/ftp/` directory listing and internal-looking filenames | [F04-ftp-directory-listing.png](../evidence/F04-ftp-directory-listing.png) — uploaded and verified on GitHub |
+| F04-03 | `/ftp/acquisitions.md` confidential-marked document displayed | [F04-confidential-acquisitions.png](../evidence/F04-confidential-acquisitions.png) — uploaded and verified on GitHub |
+| F04-04 | Credential-free PowerShell checks: document HTTP 200 plus confidential text; directory HTTP 200 with curl error 18 (incomplete response) | [F04-unauthenticated-verification.png](../evidence/F04-unauthenticated-verification.png) — uploaded and verified on GitHub |
 
 ## References
 
