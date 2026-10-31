@@ -2,7 +2,7 @@
 
 A structured, **authorized educational penetration testing assessment** of [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/) running in a local Docker container. The project demonstrates web security reconnaissance, HTTP analysis, manual exploitation validation, reporting, and remediation planning using the [OWASP Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) as a reference.
 
-> **Status: In progress.** One high-severity vulnerability has been confirmed in the local training target. This is **not** an assessment of a production website or a third-party service.
+> **Status: In progress.** Two vulnerabilities have been confirmed in the local training target (one High, one Medium; both qualitative ratings). This is **not** an assessment of a production website or a third-party service.
 
 ## Project at a glance
 
@@ -20,9 +20,10 @@ A structured, **authorized educational penetration testing assessment** of [OWAS
 | ID | Finding | Outcome | Documentation |
 |---|---|---|---|
 | **F-01** | SQL injection leading to administrator authentication bypass | **Confirmed — High (qualitative)** | [Technical finding](findings/F01-sql-injection-authentication-bypass.md) |
+| **F-02** | Cross-account basket disclosure through insecure direct object reference (IDOR) | **Confirmed — Medium (qualitative)** | [Technical finding](findings/F02-idor-basket-access.md) |
 | **O-01** | Permissive CORS header on public endpoints | **Configuration observation; exploitability not shown** | [Observation](observations/O01-cors-configuration.md) |
 
-**F-01 evidence:** The login endpoint accepted an injection payload, issued an authentication response, and the browser displayed administrator identity with the Juice Shop “Login Admin” challenge completed. Sanitized evidence files have **not** yet been uploaded. The normal invalid-login control remains to be archived.
+**F-01 evidence:** The login endpoint accepted an injection payload, issued an authentication response, and the browser displayed administrator identity with the Juice Shop “Login Admin” challenge completed. Sanitized evidence files have **not** yet been uploaded. A normal invalid-login control was observed returning HTTP 401 on 31 October 2026; its redacted screenshot remains to be uploaded.
 
 ## Methodology and documentation
 
@@ -57,8 +58,9 @@ For repeatable research, record the exact image version or digest before testing
 - [x] Validate and downgrade the initial CORS scanner finding to an observation
 - [ ] Save and redact screenshots, including a negative control
 - [ ] Record version information and image digest
-- [ ] Test access-control/IDOR scenarios using disposable lab accounts
-- [ ] Document additional verified findings
+- [x] Demonstrate cross-account basket disclosure (IDOR) using two disposable lab accounts
+- [x] Document the confirmed IDOR finding
+- [ ] Capture redacted proof of Account B session attribution for the IDOR request
 - [ ] Review risks, recommendations and final report
 - [ ] Publish the repository after evidence and secrets review
 
