@@ -8,7 +8,7 @@ This is an educational web application penetration testing assessment aligned to
 - Run the training application locally in Docker, bound to `127.0.0.1`.
 - Record tool versions: Windows 11, Docker Desktop, ZAP 2.17.0 (from the UI).
 - Docker CLI 29.9.2 (build a82e528) and the container's local image ID were recorded from read-only PowerShell inspection on 31 October 2026. See [Environment Fingerprint](../scope/environment-fingerprint.md).
-- The Juice Shop application version and registry manifest digest are pending; do not treat the local image ID as a manifest digest.
+- The running application reported **Juice Shop 20.3.0**. `docker image inspect ...RepoDigests` reported `bkimminich/juice-shop@sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4` on 31 October 2026. The registry-qualified digest was captured separately from the local image ID (the hash strings coincidentally match in the observed output). A clean-machine reproduction has not yet been tested.
 - Configure a ZAP context restricted to the target and enable Protected Mode.
 
 ## Phase 2 — Reconnaissance and passive analysis
