@@ -9,7 +9,7 @@
 
 An initial manual assessment of a deliberately vulnerable training web application was conducted using Docker, browser exploration, OWASP ZAP passive capture and focused HTTP validation.
 
-**Two findings were confirmed:** SQL injection in the authentication flow allowed login as administrator without the password (High), and an authenticated user could read another user's basket by replacing a numeric object identifier (Medium). Both severities are qualitative.
+**Three behaviors were confirmed in the training lab:** SQL injection bypassed administrator authentication (High), an authenticated user accessed another user's basket (Medium), and untrusted search input was rendered as active content in a DOM XSS proof of concept (final severity pending evaluation of cross-user triggering). Risk ratings are qualitative and provisional.
 
 One additional CORS configuration observation was recorded. Its security impact has **not** been demonstrated, so it is not counted as an exploitable finding.
 
@@ -19,6 +19,7 @@ One additional CORS configuration observation was recorded. Its security impact 
 |---|---|---|---|
 | F-01 | SQL injection — administrator authentication bypass | High (qualitative) | Confirmed |
 | F-02 | Broken access control — cross-account basket disclosure | Medium (qualitative) | Confirmed |
+| F-03 | DOM XSS in product search | Severity under review; proof of concept confirmed | Confirmed local behavior |
 | O-01 | Permissive CORS response policy | Observation, no demonstrated exploitation | Recorded |
 
 ## Scope
@@ -50,15 +51,22 @@ After obtaining baseline basket IDs 6 (Account A) and 7 (Account B), the tester 
 
 **Recommended fix:** check basket ownership against the authenticated principal on every object read and modification, and introduce cross-account negative tests. See [F-02](../findings/F02-idor-basket-access.md). The visible bearer token in the source screenshot must be redacted before publication.
 
+### F-03 — DOM XSS via product search
+
+The tester submitted a harmless iframe/JavaScript-alert payload into the product search box. A frame appeared in the search results, and Juice Shop displayed its successful **DOM XSS** challenge banner. A clean-browser trigger, cross-user delivery and practical confidentiality impact remain untested, so the definitive severity is reserved pending validation. See [F-03](../findings/F03-dom-based-xss-search.md).
+
+**Recommended fix:** use safe text DOM insertion rather than untrusted active HTML; avoid bypassing framework sanitization; add front-end regression tests.
+
 ### O-01 — Permissive CORS response policy
 
 Both the public homepage and product-search API returned `Access-Control-Allow-Origin: *`; the assessed responses did not advertise credentialed cross-origin access. Exploitable impact not established. See [O-01](../observations/O01-cors-configuration.md).
 
 ## Limitations and next actions
 
-- Add **redacted** screenshots and corresponding evidence register references.
+- Add **redacted** screenshots and corresponding evidence register references, including the F-03 search/DOM XSS challenge screenshot.
 - Upload a sanitized screenshot of the observed failed-login negative control (401 Unauthorized) for the SQL injection finding.
 - Save sanitized evidence tying the IDOR Requester session to Account B without exposing authentication tokens.
+- Test whether a separate clean browser can trigger F-03 through an application-controlled search URL, without contacting external domains.
 - Record the exact target image digest and application version.
 - Consider additional authorized access-control and injection scenarios, avoiding destructive operations.
 - Apply a consistent severity framework and calculate CVSS vectors when appropriate.
