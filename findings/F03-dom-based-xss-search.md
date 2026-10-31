@@ -15,7 +15,7 @@
 
 The client-side search functionality treated user-controlled input as active HTML rather than only as literal text. Submitting an iframe containing a harmless JavaScript alert expression resulted in a rendered frame and the application displayed the **"DOM XSS" challenge-completion banner**.
 
-The initial screenshot supports a **working local proof of concept** in the intentionally vulnerable training application. A subsequent test opened the encoded search URL in a separate **Incognito** browser session and reproduced the injected iframe. This demonstrates link-triggered HTML injection without manual re-entry in that new session. The alert dialog itself was not captured in Incognito; cross-user JavaScript execution and any sensitive-data impact remain unverified.
+The initial screenshot supports a **working local proof of concept** in the intentionally vulnerable training application. A subsequent test opened the encoded search URL in a separate **Incognito** browser session and reproduced the injected iframe. This demonstrates link-triggered HTML injection without manual re-entry in that new session. After dismissing the welcome dialogue and reloading the crafted URL in Incognito, the tester confirmed that **no JavaScript `xss` alert appeared**. The injected iframe continued to render; script execution in the separate session and sensitive-data impact remain unverified.
 
 ## Reproduction in the authorized lab
 
@@ -41,7 +41,7 @@ DOM XSS can allow script execution under an application's origin when an attacke
 
 **Established:** The local test payload is accepted and rendered in the tester's browser; the training challenge is solved; and the crafted URL reproduces the injected iframe in a separate Incognito session.
 
-**Not established:** JavaScript alert execution in the separate Incognito window (no alert is visible in the screenshot), whether a different human user can be induced to follow the crafted link, or whether sensitive information/session data can be accessed. No exfiltration or harmful payloads were attempted.
+**Not established:** JavaScript execution in the Incognito window (tester explicitly observed **no alert**, including after dismissing the welcome dialog and refreshing), whether a different human user can be induced to follow the crafted link, or whether sensitive information/session data can be accessed. No exfiltration or harmful payloads were attempted.
 
 Therefore a definitive **High** severity is not justified solely from this screenshot; rating awaits reachable victim scenario and context verification.
 
@@ -68,7 +68,7 @@ The observed behavior is consistent with unsafe transfer of search input into a 
 
 ## Limitations
 
-- Current screenshots do not show a separate JavaScript alert modal; challenge completion and active iframe rendering were observed.
+- A JavaScript alert was **not observed** in Incognito even after dismissing the application's welcome modal and refreshing. The original session's challenge completion and active iframe rendering were observed.
 - A second browser session reproduced **iframe rendering through the URL**. Independent script execution in that session and exposure to a different human user have not been verified.
 - No source code inspection, mitigation implementation, or remediation retest was performed.
 - Exact Juice Shop Docker image digest is still to be recorded.
