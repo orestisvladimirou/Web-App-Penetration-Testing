@@ -88,10 +88,10 @@ The registration handler appears to accept and persist caller-supplied authoriza
 
 | Evidence | Observation | Status |
 |---|---|---|
-| F06-01 | Baseline registration `POST /api/Users/` returned 201 and `role:customer` | Screenshot reviewed in conversation; not uploaded to repository |
-| F06-02 | Modified registration with `role:admin` returned 201 and `role:admin` | Screenshot reviewed in conversation; original contained disposable password and security answer; **do not upload unredacted** |
-| F06-03 | Administration interface rendered after logging into new test account | Screenshot reviewed in conversation; not yet uploaded; usernames/emails should be redacted before public publication |
-| F06-04 | Normal customer `lab-user-b@example.invalid` visiting the same `/#/administration` route received visible 403 denial | Completed 31 October 2026; screenshot reviewed in conversation, not yet uploaded as PNG |
+| F06-01 | Baseline registration `POST /api/Users/` returned 201 and `role:customer` | [Sanitized baseline screenshot](../evidence/F06-baseline-registration-redacted.png) — uploaded and verified |
+| F06-02 | Modified registration with `role:admin` returned 201 and `role:admin` | [Sanitized source screenshot](../evidence/F06-registration-role-admin-redacted.png) — password, security answer and cookies masked; uploaded and verified |
+| F06-03 | Administration interface rendered after logging into new test account | [Cropped screenshot](../evidence/F06-administration-screen-redacted.png) — showing page title and administrative section headings without user records; uploaded and verified |
+| F06-04 | Normal customer `lab-user-b@example.invalid` visiting the same `/#/administration` route received visible 403 denial | [Cropped source screenshot](../evidence/F06-customer-route-control-redacted.png) — uploaded and verified |
 
 See also the [sanitized comparative evidence record](../evidence/F06-privilege-comparison-observations.md), transcribed from observed screenshots.
 
