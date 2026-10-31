@@ -15,7 +15,7 @@
 
 The client-side search functionality treated user-controlled input as active HTML rather than only as literal text. Submitting an iframe containing a harmless JavaScript alert expression resulted in a rendered frame and the application displayed the **"DOM XSS" challenge-completion banner**.
 
-The screenshot supports a **working local proof of concept** in the intentionally vulnerable training application. The alert dialog itself was not captured, and delivery to a different browser/user was **not** tested.
+The initial screenshot supports a **working local proof of concept** in the intentionally vulnerable training application. A subsequent test opened the encoded search URL in a separate **Incognito** browser session and reproduced the injected iframe. This demonstrates link-triggered HTML injection without manual re-entry in that new session. The alert dialog itself was not captured in Incognito; cross-user JavaScript execution and any sensitive-data impact remain unverified.
 
 ## Reproduction in the authorized lab
 
@@ -29,6 +29,7 @@ The screenshot supports a **working local proof of concept** in the intentionall
 
 4. Submit the search.
 5. Observe that an iframe appears in the search-result area and that Juice Shop displays **"You successfully solved a challenge: DOM XSS"**.
+6. Copy the resulting local `http://localhost:3000/#/search?q=...` URL and open it in a separate Incognito window without manually entering the payload. Observe that the injected iframe is rendered again (confirmed on 31 October 2026).
 
 **Expected secure behavior:** Search input is displayed as inert text or interpreted only as data, without execution or rendering of attacker-controlled active elements.
 
@@ -38,9 +39,9 @@ The screenshot supports a **working local proof of concept** in the intentionall
 
 DOM XSS can allow script execution under an application's origin when an attacker can cause another user to load a vulnerable client-side state. Actual consequences depend on attacker-controlled input flow, ability to trigger it for a victim, Content Security Policy, cookies and privileges.
 
-**Established:** The local test payload is accepted and rendered in the tester's browser, and the training challenge is solved.
+**Established:** The local test payload is accepted and rendered in the tester's browser; the training challenge is solved; and the crafted URL reproduces the injected iframe in a separate Incognito session.
 
-**Not established:** Whether a specially crafted URL can trigger the same behavior in a **separate clean browser session**, whether another user can be induced to trigger it, or whether sensitive information/session data can be accessed. No exfiltration or harmful payloads were attempted.
+**Not established:** JavaScript alert execution in the separate Incognito window (no alert is visible in the screenshot), whether a different human user can be induced to follow the crafted link, or whether sensitive information/session data can be accessed. No exfiltration or harmful payloads were attempted.
 
 Therefore a definitive **High** severity is not justified solely from this screenshot; rating awaits reachable victim scenario and context verification.
 
@@ -63,12 +64,12 @@ The observed behavior is consistent with unsafe transfer of search input into a 
 |---|---|---|
 | F03-01 | Screenshot showing injected search payload, rendered iframe, and green "DOM XSS" completion message | Captured in conversation on 31 October 2026; **not yet uploaded to GitHub** |
 | F03-02 | Normal search baseline | Manually exercised; screenshot not archived |
-| F03-03 | Second clean-browser / URL-delivery test | **Not tested** |
+| F03-03 | Separate Incognito window loaded the crafted `/#/search?q=...` URL and rendered the injected iframe | Captured in conversation on 31 October 2026; **not yet uploaded to GitHub** |
 
 ## Limitations
 
 - Current screenshots do not show a separate JavaScript alert modal; challenge completion and active iframe rendering were observed.
-- No browser-to-browser or cross-user trigger has been reproduced yet.
+- A second browser session reproduced **iframe rendering through the URL**. Independent script execution in that session and exposure to a different human user have not been verified.
 - No source code inspection, mitigation implementation, or remediation retest was performed.
 - Exact Juice Shop Docker image digest is still to be recorded.
 
