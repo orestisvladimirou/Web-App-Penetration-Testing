@@ -11,7 +11,7 @@ An initial manual assessment of a deliberately vulnerable training web applicati
 
 **Three behaviors were confirmed in the training lab:** SQL injection bypassed administrator authentication (High), an authenticated user accessed another user's basket (Medium), and untrusted search input was rendered as active content in a DOM XSS proof of concept (final severity pending evaluation of cross-user triggering). Risk ratings are qualitative and provisional.
 
-One additional CORS configuration observation was recorded. Its security impact has **not** been demonstrated, so it is not counted as an exploitable finding.
+A further finding, F-04, records a browsable /ftp/ directory and an acquisitions document explicitly marked confidential. A separate cookie-free control is still required to substantiate unauthenticated access. One additional CORS configuration observation was recorded. Its security impact has **not** been demonstrated, so it is not counted as an exploitable finding.
 
 ## Results summary
 
@@ -20,6 +20,7 @@ One additional CORS configuration observation was recorded. Its security impact 
 | F-01 | SQL injection — administrator authentication bypass | High (qualitative) | Confirmed |
 | F-02 | Broken access control — cross-account basket disclosure | Medium (qualitative) | Confirmed |
 | F-03 | DOM XSS in product search | Severity under review; proof of concept confirmed | Confirmed local behavior |
+| F-04 | Exposed file index and confidential-marked acquisitions document | Medium (provisional) | Document exposure confirmed; anonymous access pending |
 | O-01 | Permissive CORS response policy | Observation, no demonstrated exploitation | Recorded |
 
 ## Scope
@@ -57,6 +58,12 @@ The tester submitted a harmless iframe/JavaScript-alert payload into the product
 
 **Recommended fix:** use safe text DOM insertion rather than untrusted active HTML; avoid bypassing framework sanitization; add front-end regression tests.
 
+### F-04 — Exposed FTP file index and confidential document
+
+A terms-of-use link exposed the /ftp/ path. Its directory listing displayed filenames of internal-looking backups and a document titled acquisitions.md; the acquisitions document was displayed in the browser and explicitly marked confidential. The disclosure was observed in the controlled local lab, but a fresh **cookie-free access-control check is pending**. No backup or password database contents were accessed. The training document uses placeholder content, so no real financial or corporate consequences are asserted. See [F-04](../findings/F04-exposed-directory-confidential-document.md).
+
+**Recommended fix:** remove sensitive and backup artifacts from public paths, disable unneeded index listings, and enforce server-side authorization for restricted documents.
+
 ### O-01 — Permissive CORS response policy
 
 Both the public homepage and product-search API returned `Access-Control-Allow-Origin: *`; the assessed responses did not advertise credentialed cross-origin access. Exploitable impact not established. See [O-01](../observations/O01-cors-configuration.md).
@@ -67,6 +74,7 @@ Both the public homepage and product-search API returned `Access-Control-Allow-O
 - Upload a sanitized screenshot of the observed failed-login negative control (401 Unauthorized) for the SQL injection finding.
 - Save sanitized evidence tying the IDOR Requester session to Account B without exposing authentication tokens.
 - Documented F-03 negative follow-up: no JavaScript alert appeared in Incognito after dismissing the welcome dialog and refreshing; only iframe rendering via the URL was observed. Avoid claiming cross-session script execution without proof.
+- Save sanitized /ftp/ directory and acquisitions screenshots, and record fresh cookie-free HTTP checks of both affected paths.
 - Record the exact target image digest and application version.
 - Consider additional authorized access-control and injection scenarios, avoiding destructive operations.
 - Apply a consistent severity framework and calculate CVSS vectors when appropriate.
