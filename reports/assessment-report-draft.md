@@ -25,6 +25,21 @@ A further finding, F-04, records a browsable /ftp/ directory and an acquisitions
 | F-06 | Administrator-role mass assignment during public registration | High (provisional) | Admin role assignment and customer-route denial confirmed |
 | O-01 | Permissive CORS response policy | Observation, no demonstrated exploitation | Recorded |
 
+## Laboratory environment and reproducibility
+
+The assessment ran on Windows 11 against a local Docker container named `juice-shop-lab`, exposed through `http://localhost:3000`. PowerShell inspection on 31 October 2026 confirmed:
+
+| Attribute | Value |
+|---|---|
+| Configured image reference | `bkimminich/juice-shop` (without an explicit tag) |
+| Local Docker image ID | `sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4` |
+| Docker version | `29.9.2` (build `a82e528`) |
+| OWASP ZAP | `2.17.0` |
+| Juice Shop release version | Not yet independently verified |
+| Registry image manifest digest | Not yet independently verified |
+
+**Important:** The local image ID identifies the image object/config and cannot be treated as the registry's manifest digest. The lab was not set up from a pinned image reference, so blindly repeating the `docker pull` command may select a different release. See [Environment Fingerprint](../scope/environment-fingerprint.md).
+
 ## Scope
 
 Only `http://localhost:3000` and paths belonging to the local Juice Shop instance are included. Browser services, third-party domains and other systems are excluded. See [Rules of Engagement](../scope/rules-of-engagement.md).
@@ -91,7 +106,7 @@ Both the public homepage and product-search API returned `Access-Control-Allow-O
 - F-04 directory, acquisitions, legal, and PowerShell screenshots are uploaded and linked to the finding. The directory index request included a curl error 18 despite HTTP 200.
 - F-05 sanitized response comparison has been committed; original F-05 screenshots have not been uploaded.
 - F-06 ordinary-customer route comparison is complete and documented. Sanitize the original admin UI screenshot and registration request before publishing images; the original request screenshot exposed a disposable test password and security answer.
-- Record the exact target image digest and application version.
+- Record the exact Juice Shop application version and registry manifest digest if available; Docker CLI version and local image ID are already captured in the environment fingerprint.
 - Consider additional authorized access-control and injection scenarios, avoiding destructive operations.
 - Apply a consistent severity framework and calculate CVSS vectors when appropriate.
 - Retest remediation only if a patched target is available.
