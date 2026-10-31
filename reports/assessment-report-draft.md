@@ -63,7 +63,7 @@ Both the public homepage and product-search API returned `Access-Control-Allow-O
 
 ## Limitations and next actions
 
-- Add **redacted** screenshots and corresponding evidence register references, including the F-03 search/DOM XSS challenge screenshot.
+- F-03 screenshot evidence has been uploaded and linked in the technical finding; visually review all evidence for residual secrets before publishing.
 - Upload a sanitized screenshot of the observed failed-login negative control (401 Unauthorized) for the SQL injection finding.
 - Save sanitized evidence tying the IDOR Requester session to Account B without exposing authentication tokens.
 - Separately confirm JavaScript execution in a fresh browser session for F-03 if appropriate, using a harmless local-only demonstration; only iframe rendering via the URL was observed in Incognito.
