@@ -35,6 +35,7 @@ A structured, **authorized educational penetration testing assessment** of [OWAS
 - [Docker environment fingerprint and version checks](scope/environment-fingerprint.md)
 - [Testing methodology and validation standards](methodology/testing-methodology.md)
 - [Interim penetration test report](reports/assessment-report-draft.md)
+- [Publication readiness and evidence gap review](reports/publication-readiness-checklist.md)
 - [Evidence handling guidance](evidence/README.md)
 
 Findings distinguish **scanner alerts**, **configuration observations**, and **manually confirmed exploitable weaknesses**. Risk ratings are not equated with a tool's alert severity without validation.
@@ -82,6 +83,7 @@ Navigate to <http://localhost:3000>. If the container already exists but is stop
 - [x] Document F-06 with proof limitations
 - [x] Compare Administration route in ordinary customer account: browser shows 403 denial
 - [ ] Save redacted F-06 image evidence and optionally validate underlying admin API authorization
+- [x] Inventory evidence gaps, verify repository privacy and create publication readiness checklist
 - [ ] Review risks, recommendations and final report
 - [ ] Publish the repository after evidence and secrets review
 
