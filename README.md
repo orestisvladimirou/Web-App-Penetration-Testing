@@ -24,7 +24,7 @@ A structured, **authorized educational penetration testing assessment** of [OWAS
 | **F-03** | DOM XSS through product search | **Confirmed local proof of concept — severity under review** | [Technical finding](findings/F03-dom-based-xss-search.md) |
 | **F-04** | Exposed /ftp/ directory and confidential-marked acquisitions document | **Unauthenticated document access confirmed — Medium provisional** | [Technical finding](findings/F04-exposed-directory-confidential-document.md) |
 | **F-05** | Password recovery account enumeration and security question disclosure | **Confirmed — Low provisional** | [Technical finding](findings/F05-account-enumeration-password-recovery.md) |
-| **F-06** | Public registration accepts a client-controlled administrator role | **Confirmed role assignment — High provisional; customer access comparison pending** | [Technical finding](findings/F06-mass-assignment-admin-registration.md) |
+| **F-06** | Public registration accepts a client-controlled administrator role | **Confirmed role escalation and administration-route denial for customer — High provisional** | [Technical finding](findings/F06-mass-assignment-admin-registration.md) |
 | **O-01** | Permissive CORS header on public endpoints | **Configuration observation; exploitability not shown** | [Observation](observations/O01-cors-configuration.md) |
 
 **F-01 evidence:** The login endpoint accepted an injection payload, issued an authentication response, and the browser displayed administrator identity with the Juice Shop “Login Admin” challenge completed. Sanitized evidence files have **not** yet been uploaded. A normal invalid-login control was observed returning HTTP 401 on 31 October 2026; its redacted screenshot remains to be uploaded.
@@ -77,7 +77,8 @@ For repeatable research, record the exact image version or digest before testing
 - [x] Document F-05 and commit a sanitized HTTP comparison
 - [x] Demonstrate public registration accepting `role:admin` and render the Administration interface
 - [x] Document F-06 with proof limitations
-- [ ] Compare the Administration route and data loading with an ordinary customer account
+- [x] Compare Administration route in ordinary customer account: browser shows 403 denial
+- [ ] Save redacted F-06 image evidence and optionally validate underlying admin API authorization
 - [ ] Review risks, recommendations and final report
 - [ ] Publish the repository after evidence and secrets review
 
