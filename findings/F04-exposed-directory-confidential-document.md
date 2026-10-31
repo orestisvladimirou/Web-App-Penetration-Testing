@@ -2,7 +2,7 @@
 
 | Field | Value |
 |---|---|
-| Assessment status | **Confirmed exposure of directory listing and confidential-marked document; unauthenticated control pending** |
+| Assessment status | **Confirmed unauthenticated access to confidential-marked document; directory listing displayed in browser** |
 | Severity | **Medium (provisional, qualitative)** |
 | Date observed | 31 October 2026 |
 | Target | Local OWASP Juice Shop at `http://localhost:3000` |
@@ -17,7 +17,7 @@ While inspecting the application's **About Us → terms of use** link, the teste
 
 The document contains placeholder text characteristic of the **intentionally vulnerable training application**; no real corporate transaction, stock-market consequence, or production data breach is claimed.
 
-The screenshots establish direct browser visibility of the index and document. **They do not independently demonstrate the absence of authentication cookies or an authenticated browser session.** A cookie-free request must be recorded before describing this as verified *unauthenticated* access.
+The browser screenshots establish visibility of the directory index and the document. On 31 October 2026, a separate PowerShell `curl.exe` test with **no authentication header or cookies** received HTTP 200 for the document and printed the confidential-marked text. Thus **unauthenticated document retrieval is confirmed**. A cookie-free request to the directory index also returned HTTP 200, but emitted `curl: (18) end of response with 59 bytes missing`, so that response transfer was incomplete; the earlier browser screenshot provides the directory-listing evidence.
 
 ## Reproduction within authorized local lab
 
@@ -32,7 +32,11 @@ The screenshots establish direct browser visibility of the index and document. *
    curl.exe -sS -D - -o NUL "http://localhost:3000/ftp/acquisitions.md"
    ```
 
-   Record HTTP statuses. To validate content after a successful status, inspect a limited excerpt of the document locally. This verification has **not yet been recorded**.
+   **Actual results (31 October 2026):**
+   - `GET /ftp/` — HTTP 200; curl reported error 18 (59 bytes missing), so the body transfer was incomplete.
+   - `GET /ftp/acquisitions.md` — HTTP 200 with no curl error shown.
+   - A separate cookie-free document GET piped to `Select-String "confidential"` returned: `> This document is confidential! Do not distribute!`.
+   - These commands sent no cookie or authorization header.
 
 ## Expected behavior
 
@@ -46,13 +50,13 @@ The screenshots establish direct browser visibility of the index and document. *
 - Browser navigation to `/ftp/` displayed multiple filenames, including `acquisitions.md`, `package.json.bak`, `package-lock.json.bak`, `coupons_2013.md.bak`, and `incident-support.kdbx`.
 - Browser navigation to `/ftp/acquisitions.md` displayed a document explicitly marked confidential.
 
-**Not established:** What any backup or `.kdbx` file contains; whether these files are downloadable without authentication; whether the request was authenticated; or any real-world business impact. No additional sensitive files were opened or downloaded in this test.
+**Not established:** What any backup or `.kdbx` file contains; whether these other files are downloadable without authentication; or any real-world business impact. **Unauthenticated document retrieval is established**, independently of the browser session. No additional sensitive files were opened or downloaded in this test.
 
 ## Security impact and risk rationale
 
 Directory listing simplifies discovery of files not intended for general users, and direct access to confidential-marked documents demonstrates a missing or ineffective access boundary for that content. In a production system, similar exposure could disclose business planning, credentials, source code, configuration or backups if such information is stored there.
 
-**Medium, provisional:** A document designated confidential was readable via browser and other potentially sensitive filenames were enumerated, but the environment is a synthetic lab and independent anonymous access is still awaiting verification. Reassess once the unauthenticated control is captured and the data's real sensitivity is established.
+**Medium, provisional:** A document designated confidential was retrieved through a credential-free HTTP request, and other potentially sensitive filenames were enumerated. The environment is synthetic, so the data has no verified real-world business sensitivity. Reassess if demonstrating a comparable issue in an authorized production-like setting.
 
 ## Likely cause
 
@@ -74,7 +78,7 @@ The application exposes files in a static `/ftp/` location and permits listing o
 | F04-01 | Terms document displayed at `/ftp/legal.md` | Screenshot shared in conversation; not yet uploaded to GitHub |
 | F04-02 | `/ftp/` directory listing and internal-looking filenames | Screenshot shared in conversation; not yet uploaded to GitHub |
 | F04-03 | `/ftp/acquisitions.md` confidential-marked document displayed | Screenshot shared in conversation; not yet uploaded to GitHub |
-| F04-04 | Fresh cookie-free access-control check | **Pending** |
+| F04-04 | Credential-free PowerShell checks: document HTTP 200 plus confidential text; directory HTTP 200 with curl error 18 (incomplete response) | **Observed and reviewed in conversation on 31 October 2026; screenshot not yet uploaded to GitHub** |
 
 ## References
 
