@@ -8,6 +8,9 @@ Suggested filenames (not yet uploaded):
 - `F01-login-response-redacted.png`
 - `F01-admin-access-redacted.png`
 - `F01-invalid-login-control-redacted.png`
+- `F02-account-a-basket-redacted.png`
+- `F02-account-b-basket-redacted.png`
+- `F02-cross-account-request-redacted.png`
 
 Before adding evidence:
 1. Redact JWTs, bearer tokens, cookies, Authorization headers, real credentials, identifiers and unrelated personal information.
