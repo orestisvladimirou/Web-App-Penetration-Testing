@@ -2,9 +2,9 @@
 
 | Field | Value |
 |---|---|
-| Status | **Confirmed client-controlled administrator role assignment; administrative authorization comparison pending** |
+| Status | **Confirmed administrator-role mass assignment and comparative UI access control bypass** |
 | Severity | **High, provisional (qualitative)** |
-| Confidence | High for role assignment; moderate for downstream authorization impact |
+| Confidence | High for role assignment and differential administration-route access; backend authorization effects not independently tested |
 | Date tested | 31 October 2026 |
 | Target | OWASP Juice Shop, local Docker deployment at `http://localhost:3000` |
 | Entry point | `POST /api/Users/` |
@@ -15,7 +15,7 @@
 
 The public user-registration endpoint accepted a caller-controlled `role` property and created an account with `"role":"admin"`. The HTTP response explicitly confirmed that role. A subsequent browser session logged in as the newly created test account and rendered the application's **Administration** interface, including registered-user listings and customer feedback management UI.
 
-**Scope of proof:** The API-level creation of an administrator-role user is confirmed. The Administration page was visible after logging into the new account, but a same-path comparison against an ordinary customer session has **not yet been captured**. Do not use page access alone as conclusive evidence of effective privilege checks: an independently vulnerable route might expose the interface. No administrator-only changes were performed.
+**Scope of proof:** The API-level creation of an administrator-role user is confirmed. The Administration page was visible after logging into the newly created account, while a normal customer account was shown the browser message **“403 — You are not allowed to access this page!”** at the same route. This confirms a meaningful difference in UI authorization. The 403 was displayed by the app (not verified as an HTTP status), and privileged server-side state changes were not tested.
 
 ## Controlled test setup
 
@@ -36,7 +36,7 @@ Both were created from ZAP Requester using the captured `POST /api/Users/` regis
 6. Submit only to the local Juice Shop endpoint.
 7. Inspect the HTTP response body and registration status.
 8. Sign into the newly created test account and navigate to `/#/administration`. Observe the interface without clicking destructive or modifying controls.
-9. **Pending comparative control:** Log into an ordinary `role:customer` test account and try the exact same route. Compare authenticated identity, rendered page and any relevant data-loading API statuses without modifying user data.
+9. **Completed comparative control (31 October 2026):** Log into the normal customer account `lab-user-b@example.invalid` and visit the exact same `/#/administration` route. The browser displays **403 — You are not allowed to access this page!**, while the Account menu shows that the ordinary customer is logged in. No modifying actions were taken.
 
 ### Sanitized request excerpt
 
@@ -56,19 +56,20 @@ The object above is a **sanitized illustrative excerpt**, not a byte-for-byte ca
 - Response JSON included `"status":"success"`, the new account email, and `"role":"admin"`.
 - The normal baseline registration had also returned 201 but with `"role":"customer"`.
 - The browser opened the Administration interface when logged in under the account created with the injected role. The screenshot shows a registered-user table, customer feedback entries, and UI management controls.
+- Normal customer comparison: the account menu identified `lab-user-b@example.invalid`; visiting the same Administration route produced the UI message **403 — You are not allowed to access this page!**.
 - No account modifications, user-record viewing via management icons, feedback deletions or settings changes were attempted.
 
 ## Security impact
 
 The registration API allows a public client to assign itself an administrator role instead of enforcing server-controlled role selection. The role assignment crosses a privileged trust boundary and may enable administrator-only features, contingent on the application's actual authorization checks.
 
-**Confirmed:** Unauthorized `admin` role persisted in the created account response; administration interface rendered afterward.
+**Confirmed:** The untrusted request created an `admin`-role account that could render the Administration page, whereas the ordinary customer was denied at the same route by the application.
 
-**Not yet confirmed independently:** A same-route normal-customer denial, whether sensitive administrative APIs enforce the assigned role, and any actual privileged state-changing operation. No data was modified beyond creation of the disposable test account.
+**Not independently confirmed:** The underlying API's HTTP denial status, enforcement of permissions on individual administrator API endpoints, or any privileged state-changing operation. No data was modified beyond creation of the disposable test account.
 
 ## Severity rationale
 
-**High, provisional.** Untrusted public clients can self-assign an administrator role, with potential significant authorization impact. The rating should be revisited after the customer-session comparison and review of affected server-side permission checks. Do not claim full account control, data alteration or administrative takeover has been demonstrated.
+**High, provisional.** Untrusted public clients can self-assign an administrator role and thereby reach an administrative interface that rejects normal customers. Further risk analysis may assess the underlying API authorization and achievable state-changing impact; no such changes were attempted. Do not claim total application control or destructive capabilities.
 
 ## Root cause hypothesis
 
@@ -90,7 +91,9 @@ The registration handler appears to accept and persist caller-supplied authoriza
 | F06-01 | Baseline registration `POST /api/Users/` returned 201 and `role:customer` | Screenshot reviewed in conversation; not uploaded to repository |
 | F06-02 | Modified registration with `role:admin` returned 201 and `role:admin` | Screenshot reviewed in conversation; original contained disposable password and security answer; **do not upload unredacted** |
 | F06-03 | Administration interface rendered after logging into new test account | Screenshot reviewed in conversation; not yet uploaded; usernames/emails should be redacted before public publication |
-| F06-04 | Normal customer session attempting the same administration route | **Pending** |
+| F06-04 | Normal customer `lab-user-b@example.invalid` visiting the same `/#/administration` route received visible 403 denial | Completed 31 October 2026; screenshot reviewed in conversation, not yet uploaded as PNG |
+
+See also the [sanitized comparative evidence record](../evidence/F06-privilege-comparison-observations.md), transcribed from observed screenshots.
 
 ## References
 
