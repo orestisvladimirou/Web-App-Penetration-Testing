@@ -63,17 +63,17 @@ An unauthenticated actor can impersonate the application administrator without k
 
 | Evidence | Source | Publication status |
 |---|---|---|
-| F01-01 | ZAP POST request with payload | Captured in conversation; sanitized image not uploaded |
+| F01-01 | ZAP POST request with payload and password masked | [Sanitized source screenshot](../evidence/F01-login-request-redacted.png) — uploaded and verified |
 | F01-02 | ZAP HTTP 200 JSON response containing auth token | Captured; **token must be redacted** before upload |
-| F01-03 | Browser showing `admin@juice-sh.op` and “Login Admin” challenge | Captured in conversation; sanitized image not uploaded |
-| F01-04 | Invalid-credential negative control | Observed 31 October 2026: POST /rest/user/login returned HTTP 401 Unauthorized and `Invalid email or password.`; screenshot not yet uploaded |
+| F01-03 | Browser showing `admin@juice-sh.op` and “Login Admin” challenge | [Sanitized source screenshot](../evidence/F01-admin-access-redacted.png) — uploaded and verified |
+| F01-04 | Invalid-credential negative control | [Sanitized screenshot](../evidence/F01-invalid-login-control-redacted.png) — HTTP 401 and `Invalid email or password.`; uploaded and verified |
 
 **Evidence hygiene:** No bearer tokens, JWTs, session cookies, sensitive headers or password values from live accounts should be published. Avoid uploading raw ZAP session databases or HTTP archive files.
 
 ## Assessment limitations
 
-- Exact Juice Shop version/image digest has not yet been recorded.
-- The invalid-credential negative control was observed on 31 October 2026 (HTTP 401; `Invalid email or password.`), but its redacted screenshot has not yet been uploaded to this repository.
+- Target confirmed as Juice Shop **20.3.0**; see the [environment fingerprint](../scope/environment-fingerprint.md) for the image reference and repository digest.
+- The invalid-credential negative-control screenshot, the SQL injection POST screenshot, and the admin challenge screenshot have been uploaded. A screenshot of the successful authentication JSON response was withheld because it contained a live bearer token; the HTTP 200 response and successful admin identity are still documented independently.
 - No patched build was assessed; remediation is recommended, **not implemented or verified**.
 
 ## References
