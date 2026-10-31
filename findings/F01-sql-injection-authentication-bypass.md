@@ -66,14 +66,14 @@ An unauthenticated actor can impersonate the application administrator without k
 | F01-01 | ZAP POST request with payload | Captured in conversation; sanitized image not uploaded |
 | F01-02 | ZAP HTTP 200 JSON response containing auth token | Captured; **token must be redacted** before upload |
 | F01-03 | Browser showing `admin@juice-sh.op` and “Login Admin” challenge | Captured in conversation; sanitized image not uploaded |
-| F01-04 | Invalid-credential negative control | Pending archival / repeat test |
+| F01-04 | Invalid-credential negative control | Observed 31 October 2026: POST /rest/user/login returned HTTP 401 Unauthorized and `Invalid email or password.`; screenshot not yet uploaded |
 
 **Evidence hygiene:** No bearer tokens, JWTs, session cookies, sensitive headers or password values from live accounts should be published. Avoid uploading raw ZAP session databases or HTTP archive files.
 
 ## Assessment limitations
 
 - Exact Juice Shop version/image digest has not yet been recorded.
-- The standalone invalid-credential control response is not yet saved.
+- The invalid-credential negative control was observed on 31 October 2026 (HTTP 401; `Invalid email or password.`), but its redacted screenshot has not yet been uploaded to this repository.
 - No patched build was assessed; remediation is recommended, **not implemented or verified**.
 
 ## References
