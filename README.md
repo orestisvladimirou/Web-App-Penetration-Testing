@@ -64,7 +64,8 @@ For repeatable research, record the exact image version or digest before testing
 - [ ] Capture redacted proof of Account B session attribution for the IDOR request
 - [x] Demonstrate DOM XSS using a harmless search-field payload
 - [x] Document F-03 and note missing cross-user trigger validation
-- [ ] Verify whether a clean browser can trigger F-03 via a crafted local URL
+- [x] Verify that a clean Incognito browser renders F-03's injected iframe when opening the crafted local URL
+- [ ] Independently validate script execution in a separate session before assigning F-03 final severity
 - [ ] Review risks, recommendations and final report
 - [ ] Publish the repository after evidence and secrets review
 
