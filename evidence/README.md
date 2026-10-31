@@ -5,6 +5,8 @@ This directory is reserved for **sanitized, human-reviewed** assessment evidence
 ## Uploaded evidence
 
 - [F02-cross-account-request-redacted.png](F02-cross-account-request-redacted.png) — cross-account basket request and response; redacted image uploaded 31 October 2026. **Redaction should be reviewed again before publication.**
+- [F03-dom-xss-search-redacted.png](F03-dom-xss-search-redacted.png) — original search input, injected iframe and completion banner; file verified on GitHub 31 October 2026.
+- [F03-incognito-url-reproduction.png](F03-incognito-url-reproduction.png) — crafted search URL and iframe rendering in a separate Incognito session; file verified on GitHub 31 October 2026.
 
 ## Planned evidence (not yet uploaded):
 
@@ -14,8 +16,6 @@ This directory is reserved for **sanitized, human-reviewed** assessment evidence
 - `F01-invalid-login-control-redacted.png`
 - `F02-account-a-basket-redacted.png`
 - `F02-account-b-basket-redacted.png`
-- `F03-dom-xss-search-redacted.png`
-- `F03-incognito-url-reproduction.png`
 
 Before adding evidence:
 1. Redact JWTs, bearer tokens, cookies, Authorization headers, real credentials, identifiers and unrelated personal information.
