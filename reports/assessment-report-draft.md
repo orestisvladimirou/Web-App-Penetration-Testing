@@ -35,10 +35,10 @@ The assessment ran on Windows 11 against a local Docker container named `juice-s
 | Local Docker image ID | `sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4` |
 | Docker version | `29.9.2` (build `a82e528`) |
 | OWASP ZAP | `2.17.0` |
-| Juice Shop release version | Not yet independently verified |
-| Registry image manifest digest | Not yet independently verified |
+| Juice Shop release version | **20.3.0** (running API response) |
+| Repository digest (`RepoDigests`) | `bkimminich/juice-shop@sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4` |
 
-**Important:** The local image ID identifies the image object/config and cannot be treated as the registry's manifest digest. The lab was not set up from a pinned image reference, so blindly repeating the `docker pull` command may select a different release. See [Environment Fingerprint](../scope/environment-fingerprint.md).
+**Important:** The local image ID and the Docker `RepoDigests` entry happened to have the same SHA-256 value in the captured output, but they are distinct concepts; the pullable, repository-qualified value was obtained directly from `RepoDigests`. The original lab was created from an unpinned image reference; the documented [Environment Fingerprint](../scope/environment-fingerprint.md) now supplies a pinned alternative for reproduction, not yet verified on a clean machine.
 
 ## Scope
 
@@ -106,7 +106,7 @@ Both the public homepage and product-search API returned `Access-Control-Allow-O
 - F-04 directory, acquisitions, legal, and PowerShell screenshots are uploaded and linked to the finding. The directory index request included a curl error 18 despite HTTP 200.
 - F-05 sanitized response comparison has been committed; original F-05 screenshots have not been uploaded.
 - F-06 ordinary-customer route comparison is complete and documented. Sanitize the original admin UI screenshot and registration request before publishing images; the original request screenshot exposed a disposable test password and security answer.
-- Record the exact Juice Shop application version and registry manifest digest if available; Docker CLI version and local image ID are already captured in the environment fingerprint.
+- Docker image reference, repository-qualified digest, local image ID, Docker CLI version and running Juice Shop 20.3.0 are recorded in the environment fingerprint. A clean-environment reproduction of the pinned digest is still outstanding.
 - Consider additional authorized access-control and injection scenarios, avoiding destructive operations.
 - Apply a consistent severity framework and calculate CVSS vectors when appropriate.
 - Retest remediation only if a patched target is available.
