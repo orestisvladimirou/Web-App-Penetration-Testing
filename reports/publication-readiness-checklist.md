@@ -9,12 +9,12 @@
 
 | Finding | Demonstrated behavior | Evidence / remaining qualification |
 |---|---|---|
-| F-01 SQL injection | Local administrator-login bypass; negative login control returned 401 | Technical report exists. **Sanitized source screenshots for successful injection and negative control not uploaded** |
+| F-01 SQL injection | Local administrator-login bypass; negative login control returned 401 | Sanitized POST injection request, successful administrator challenge page and invalid-login HTTP 401 screenshot now uploaded; token-bearing JSON response screenshot withheld |
 | F-02 IDOR | Account B retrieved Account A's basket after changing object ID | Redacted Requester screenshot uploaded. Independently saved evidence tying the original Requester token/session to Account B remains desirable; inspect screenshot redaction |
 | F-03 DOM XSS | Initial Juice Shop DOM XSS completion and link-reproduced iframe rendering in Incognito | Two screenshots uploaded. **No JavaScript alert was observed in Incognito**; do not claim cross-session JavaScript execution |
 | F-04 information disclosure | Cookie-free requests retrieved a confidential-marked lab document; index visible | Four screenshots uploaded. Directory index curl returned HTTP 200 and error 18 (incomplete transfer) |
-| F-05 account enumeration | Existing recovery email returned question object; nonexistent email returned `{}` | Sanitized transcription committed. Original response/UI PNGs not uploaded; no unauthorized reset attempted |
-| F-06 mass assignment | Public registration accepted `role:admin`; that user loaded Administration UI while normal customer was denied with an app-displayed 403 | Sanitized comparative observation document committed. **Redacted original request, admin UI and customer-denial screenshots not yet uploaded**; backend privileged state changes were not tested |
+| F-05 account enumeration | Existing recovery email returned question object; nonexistent email returned `{}` | Sanitized transcript plus two cropped original HTTP response screenshots uploaded; no unauthorized reset attempted |
+| F-06 mass assignment | Public registration accepted `role:admin`; that user loaded Administration UI while normal customer was denied with an app-displayed 403 | Sanitized comparison and four cropped original screenshots (baseline, elevated registration, administration UI, ordinary-customer denial) uploaded; backend privileged state changes were not tested |
 | O-01 CORS configuration | Wildcard `Access-Control-Allow-Origin` on public endpoints | Observation only; no confirmed exploit or credential exposure |
 
 ## Verified environment fingerprint
@@ -31,9 +31,9 @@
 ## Before switching the repository to Public
 
 - [ ] Perform **manual pixel-level review** of all committed screenshots; ensure no bearer/JWT tokens, cookies, passwords, personal details or security answers are visible, including browser address bars and wrapped text.
-- [ ] Prefer adding safely redacted F-01 success and negative-control screenshots.
-- [ ] Prefer adding safely redacted F-06 registration and role-comparison screenshots.
-- [ ] Consider archiving the original F-05 comparison screenshots (current transcribed evidence is clearly labeled and traceable).
+- [x] Add safely redacted F-01 injection, challenge success and negative-control screenshots (JWT response remains intentionally withheld).
+- [x] Add safely redacted F-06 registration and role-comparison screenshots.
+- [x] Archive cropped original F-05 HTTP response screenshots alongside the sanitized comparison transcript.
 - [ ] Review F-02 evidence for adequate Account B session attribution without exposing tokens.
 - [ ] Ensure the executive summary consistently reports **six** technical findings and one separate CORS observation.
 - [ ] Resolve qualitative severity labels, documenting assumptions and limits rather than retroactively inventing CVSS values.
@@ -44,11 +44,11 @@
 
 ## Publication decision
 
-**Not yet publication-ready.** The repository is currently private, six technical findings and related evidence have been documented, and the lab fingerprint is now specific. Source screenshots for F-01 and F-06, a consistency pass, and a final evidence/secrets review remain the highest-priority work. No need to generate more vulnerabilities simply to increase the finding count.
+**Not yet publication-ready.** The repository is currently private, six technical findings and related evidence have been documented, and the lab fingerprint is now specific. Redacted screenshots for F-01, F-05 and F-06 are now committed. The main remaining priorities are full evidence/secrets review, consistency and severity review, and final report preparation. No need to generate more vulnerabilities simply to increase the finding count.
 
 ## Next practical sequence
 
-1. Audit and finish redacted screenshot evidence, beginning with F-01 and F-06.
+1. Perform a final human review of all redacted screenshot evidence; keep the token-bearing F-01 response uncommitted.
 2. Make the interim report a concise final report with consistent findings, limitations, and risk rationale.
 3. Verify no sensitive material is committed and test the key links.
 4. Review the final public-facing README and only then consider changing repository visibility.
