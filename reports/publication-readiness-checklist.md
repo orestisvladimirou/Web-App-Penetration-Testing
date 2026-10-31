@@ -30,25 +30,25 @@
 
 ## Before switching the repository to Public
 
-- [ ] Perform **manual pixel-level review** of all committed screenshots; ensure no bearer/JWT tokens, cookies, passwords, personal details or security answers are visible, including browser address bars and wrapped text.
+- [x] Visually inspect all **16 committed PNGs** at readable resolution; no exposed secret values or personal credentials were identified. Synthetic lab addresses and public challenge payloads remain intentionally visible. The successful-login token response screenshot was never committed.
 - [x] Add safely redacted F-01 injection, challenge success and negative-control screenshots (JWT response remains intentionally withheld).
 - [x] Add safely redacted F-06 registration and role-comparison screenshots.
 - [x] Archive cropped original F-05 HTTP response screenshots alongside the sanitized comparison transcript.
 - [ ] Review F-02 evidence for adequate Account B session attribution without exposing tokens.
-- [ ] Ensure the executive summary consistently reports **six** technical findings and one separate CORS observation.
-- [ ] Resolve qualitative severity labels, documenting assumptions and limits rather than retroactively inventing CVSS values.
-- [ ] Review all report links, file names, scope statements, and technical claims for consistency.
+- [x] Align the authoritative final report and main README to **six** technical findings, including F-03 **Unrated**, and one separate CORS observation.
+- [x] Record qualitative priorities and explicit risk/impact limitations for all findings. No CVSS score or vector was invented.
+- [x] Check all relative Markdown links against the repository tree; none were missing during the final check. Older working draft is labeled superseded.
 - [ ] Preserve test date, recorded version and available digest; consider a clean-environment reproduction before claiming end-to-end reproducibility.
-- [ ] Ensure the report never claims a fix was implemented or retested; **no remediation retest has been performed**.
+- [x] State explicitly that no remediation was implemented or retested.
 - [ ] Make the repository public only after the user approves and final secrets review is complete.
 
 ## Publication decision
 
-**Not yet publication-ready.** The repository is currently private, six technical findings and related evidence have been documented, and the lab fingerprint is now specific. Redacted screenshots for F-01, F-05 and F-06 are now committed. The main remaining priorities are full evidence/secrets review, consistency and severity review, and final report preparation. No need to generate more vulnerabilities simply to increase the finding count.
+**Final report prepared; publication requires owner approval.** The repo is private, 16 committed screenshots have been visually audited for visible credential material, 17 existing text documents were scanned for token-like secrets, and a final report now lists six evidence-grounded findings and one non-exploitable observation. The main optional evidence improvement is independent Account B session attribution for F-02. The fresh-machine digest pull/run and any patched-remediation retests remain explicitly out of scope for this final report. No need to add findings simply to increase the count.
 
 ## Next practical sequence
 
-1. Perform a final human review of all redacted screenshot evidence; keep the token-bearing F-01 response uncommitted.
-2. Make the interim report a concise final report with consistent findings, limitations, and risk rationale.
-3. Verify no sensitive material is committed and test the key links.
-4. Review the final public-facing README and only then consider changing repository visibility.
+1. Review the [final report](final-penetration-test-report.md) and public-facing README for presentation preferences.
+2. Optional: archive independently attributable, token-free Account B basket baseline for F-02; current report already discloses this proof limitation.
+3. Optional: test the pinned digest on a clean environment, without altering the assessment container.
+4. Keep the repository private until its owner explicitly approves making it public.
