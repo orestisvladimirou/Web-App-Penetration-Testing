@@ -70,7 +70,7 @@ For repeatable research, record the exact image version or digest before testing
 - [x] Discover exposed directory listing and confidential-marked document at /ftp/
 - [x] Document F-04 with limits of evidence
 - [x] Verify credential-free HTTP 200 and confidential text retrieval for F-04; `/ftp/` returned HTTP 200 with an incomplete-transfer warning
-- [ ] Upload sanitized F-04 screenshots and PowerShell verification evidence
+- [x] Upload and link four F-04 screenshots and PowerShell verification evidence
 - [ ] Review risks, recommendations and final report
 - [ ] Publish the repository after evidence and secrets review
 
