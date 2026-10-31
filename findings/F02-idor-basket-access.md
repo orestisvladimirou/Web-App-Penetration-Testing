@@ -55,7 +55,7 @@ The API should check that the authenticated principal owns basket ID 6. If Accou
 - The server returned **HTTP 200 OK** with `application/json`.
 - The response contained basket `id: 6`, `UserId: 25`, and products matching Account A's basket, including **Apple Juice** and **Banana Juice**.
 
-The successful response showing Account A's identifiable basket contents is stronger evidence than the status code alone. A redacted screenshot of the modified request has been uploaded; image pixels have not been independently re-inspected, so verify the redaction before making the repository public.
+The successful response showing Account A's identifiable basket contents is stronger evidence than the status code alone. The committed Requester screenshot was visually reviewed during the final evidence audit on 31 October 2026: the `Authorization: Bearer` header label remains visible but its token value is not shown. Independent token-to-Account-B attribution still relies on the documented workflow.
 
 ## Impact
 
@@ -82,7 +82,7 @@ The API appears to look up a basket using a client-supplied numeric ID without a
 |---|---|---|
 | F02-01 | Account A baseline: `GET /rest/basket/6`, products Apple Juice/Banana Juice | Captured in conversation; sanitized screenshot not uploaded |
 | F02-02 | Account B baseline: `GET /rest/basket/7`, normal account basket | Captured in conversation; sanitized screenshot not uploaded |
-| F02-03 | ZAP Requester: Bearer-authenticated `GET /rest/basket/6` returned 200 with Account A's products | [Redacted screenshot](../evidence/F02-cross-account-request-redacted.png) uploaded to GitHub on 31 October 2026; recheck token redaction before publication |
+| F02-03 | ZAP Requester: Bearer-authenticated `GET /rest/basket/6` returned 200 with Account A's products | [Redacted screenshot](../evidence/F02-cross-account-request-redacted.png) reviewed during final evidence audit; token value not visible |
 | F02-04 | Independently saved proof that the Requester token belongs to Account B | Still to be documented without disclosing the token |
 
 ## Assessment limitations
@@ -90,7 +90,7 @@ The API appears to look up a basket using a client-supplied numeric ID without a
 - The screenshot alone does not independently link the Requester token to Account B without the preceding user workflow; archive sanitized session attribution alongside the request for employer-facing reproducibility.
 - No state-changing operations on Account A's basket were attempted.
 - No patched build was tested; recommendations are **not verified fixes**.
-- Exact Juice Shop image version and digest remain to be recorded.
+- Juice Shop 20.3.0 and the Docker repository digest were recorded and linked in the [environment fingerprint](../scope/environment-fingerprint.md).
 - The F02-03 screenshot is committed in `evidence/`; baseline screenshots and independent Account B session attribution have not yet been uploaded.
 
 ## References
