@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | Status | **Confirmed in local training lab** |
-| Severity | **Provisional; final risk rating pending cross-user delivery and impact analysis** |
+| Severity | **Unrated — independently verifiable JavaScript execution and victim impact not established** |
 | Confidence | High — Juice Shop reported its DOM XSS challenge solved and an injected iframe was rendered |
 | Date observed | 31 October 2026 |
 | Target | `http://localhost:3000` (local OWASP Juice Shop) |
@@ -43,7 +43,7 @@ DOM XSS can allow script execution under an application's origin when an attacke
 
 **Not established:** JavaScript execution in the Incognito window (tester explicitly observed **no alert**, including after dismissing the welcome dialog and refreshing), whether a different human user can be induced to follow the crafted link, or whether sensitive information/session data can be accessed. No exfiltration or harmful payloads were attempted.
 
-Therefore a definitive **High** severity is not justified solely from this screenshot; rating awaits reachable victim scenario and context verification.
+The final assessment reports this finding as **Unrated**. This is not a denial of the successful Juice Shop challenge or the demonstrated active iframe markup; it avoids inferring cross-session JavaScript execution and associated impact without supporting evidence.
 
 ## Likely root cause
 
@@ -71,7 +71,7 @@ The observed behavior is consistent with unsafe transfer of search input into a 
 - A JavaScript alert was **not observed** in Incognito even after dismissing the application's welcome modal and refreshing. The original session's challenge completion and active iframe rendering were observed.
 - A second browser session reproduced **iframe rendering through the URL**. Independent script execution in that session and exposure to a different human user have not been verified.
 - No source code inspection, mitigation implementation, or remediation retest was performed.
-- Exact Juice Shop Docker image digest is still to be recorded.
+- Juice Shop **20.3.0** and the repository-qualified Docker digest are recorded in the [environment fingerprint](../scope/environment-fingerprint.md).
 
 ## References
 
