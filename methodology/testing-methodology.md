@@ -7,7 +7,8 @@ This is an educational web application penetration testing assessment aligned to
 - Document assessment authorization, host, port, limitations and exclusions.
 - Run the training application locally in Docker, bound to `127.0.0.1`.
 - Record tool versions: Windows 11, Docker Desktop, ZAP 2.17.0 (from the UI).
-- Record Docker image ID/digest and Juice Shop version when available.
+- Docker CLI 29.9.2 (build a82e528) and the container's local image ID were recorded from read-only PowerShell inspection on 31 October 2026. See [Environment Fingerprint](../scope/environment-fingerprint.md).
+- The Juice Shop application version and registry manifest digest are pending; do not treat the local image ID as a manifest digest.
 - Configure a ZAP context restricted to the target and enable Protected Mode.
 
 ## Phase 2 — Reconnaissance and passive analysis
