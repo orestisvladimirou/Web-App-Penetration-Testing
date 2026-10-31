@@ -62,9 +62,9 @@ The observed behavior is consistent with unsafe transfer of search input into a 
 
 | Evidence | Description | Status |
 |---|---|---|
-| F03-01 | Screenshot showing injected search payload, rendered iframe, and green "DOM XSS" completion message | Captured in conversation on 31 October 2026; **not yet uploaded to GitHub** |
+| F03-01 | Screenshot showing injected search payload, rendered iframe, and green "DOM XSS" completion message | [Evidence screenshot](../evidence/F03-dom-xss-search-redacted.png) uploaded and verified on GitHub on 31 October 2026 |
 | F03-02 | Normal search baseline | Manually exercised; screenshot not archived |
-| F03-03 | Separate Incognito window loaded the crafted `/#/search?q=...` URL and rendered the injected iframe | Captured in conversation on 31 October 2026; **not yet uploaded to GitHub** |
+| F03-03 | Separate Incognito window loaded the crafted `/#/search?q=...` URL and rendered the injected iframe | [Incognito screenshot](../evidence/F03-incognito-url-reproduction.png) uploaded and verified on GitHub on 31 October 2026 |
 
 ## Limitations
 
