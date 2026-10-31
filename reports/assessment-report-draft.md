@@ -11,7 +11,7 @@ An initial manual assessment of a deliberately vulnerable training web applicati
 
 **Three behaviors were confirmed in the training lab:** SQL injection bypassed administrator authentication (High), an authenticated user accessed another user's basket (Medium), and untrusted search input was rendered as active content in a DOM XSS proof of concept (final severity pending evaluation of cross-user triggering). Risk ratings are qualitative and provisional.
 
-A further finding, F-04, records a browsable /ftp/ directory and an acquisitions document explicitly marked confidential. A credential-free PowerShell test has since confirmed HTTP 200 and confidential-marked content for `acquisitions.md`. The `/ftp/` index returned HTTP 200 with a curl error 18 incomplete-transfer warning; the browser screenshot separately shows the listing. An additional finding, F-05, confirms that an unauthenticated recovery endpoint distinguishes an existing account from a nonexistent one through its response body, revealing the account's security question (Low, provisional). F-06 demonstrates that public registration accepted `role:admin` and returned a new account with that elevated role; the Administration UI was also rendered while logged in under the test account. Effective authorization impact still needs a same-route ordinary-customer comparison (High, provisional). One additional CORS configuration observation was recorded. Its security impact has **not** been demonstrated, so it is not counted as an exploitable finding.
+A further finding, F-04, records a browsable /ftp/ directory and an acquisitions document explicitly marked confidential. A credential-free PowerShell test has since confirmed HTTP 200 and confidential-marked content for `acquisitions.md`. The `/ftp/` index returned HTTP 200 with a curl error 18 incomplete-transfer warning; the browser screenshot separately shows the listing. An additional finding, F-05, confirms that an unauthenticated recovery endpoint distinguishes an existing account from a nonexistent one through its response body, revealing the account's security question (Low, provisional). F-06 demonstrates that public registration accepted `role:admin` and returned a new account with that elevated role; the Administration UI was also rendered while logged in under the test account. An ordinary customer subsequently received the application's 403 denial message at the same route; F-06 therefore demonstrates a meaningful role-based access difference (High, provisional). One additional CORS configuration observation was recorded. Its security impact has **not** been demonstrated, so it is not counted as an exploitable finding.
 
 ## Results summary
 
@@ -22,7 +22,7 @@ A further finding, F-04, records a browsable /ftp/ directory and an acquisitions
 | F-03 | DOM XSS in product search | Severity under review; proof of concept confirmed | Confirmed local behavior |
 | F-04 | Exposed file index and confidential-marked acquisitions document | Medium (provisional) | Unauthenticated document retrieval confirmed; Medium provisional |
 | F-05 | Account enumeration via password recovery | Low (provisional) | Confirmed |
-| F-06 | Administrator-role mass assignment during public registration | High (provisional) | Admin role assignment confirmed; customer comparison pending |
+| F-06 | Administrator-role mass assignment during public registration | High (provisional) | Admin role assignment and customer-route denial confirmed |
 | O-01 | Permissive CORS response policy | Observation, no demonstrated exploitation | Recorded |
 
 ## Scope
@@ -74,7 +74,7 @@ The `GET /rest/user/security-question?email=...` endpoint responded to a registe
 
 ### F-06 — Public registration permits administrator-role mass assignment
 
-A captured baseline `POST /api/Users/` registration returned HTTP 201 and `role:customer`. A modified registration for a new disposable test account supplied `role:admin` and returned HTTP 201 with `role:admin`. After login to the new account, Juice Shop's Administration page rendered registered-user lists and customer feedback controls. **A customer-account comparison at the exact same route has not yet been performed**, and no privileged state-changing action was attempted. See [F-06](../findings/F06-mass-assignment-admin-registration.md).
+A captured baseline `POST /api/Users/` registration returned HTTP 201 and `role:customer`. A modified registration for a new disposable test account supplied `role:admin` and returned HTTP 201 with `role:admin`. After login to the new account, Juice Shop's Administration page rendered registered-user lists and customer feedback controls. A normal customer (`lab-user-b@example.invalid`) then visited the identical route and received the application's **403 — You are not allowed to access this page!** message. The app's displayed error was not independently verified as an HTTP status; no privileged state-changing action was attempted. See the [sanitized comparison](../evidence/F06-privilege-comparison-observations.md). See [F-06](../findings/F06-mass-assignment-admin-registration.md).
 
 **Recommended fix:** server-side registration allowlist; assign `customer` role on registration and restrict role updates to authorized privileged flows, with backend checks and regression tests.
 
@@ -90,7 +90,7 @@ Both the public homepage and product-search API returned `Access-Control-Allow-O
 - Documented F-03 negative follow-up: no JavaScript alert appeared in Incognito after dismissing the welcome dialog and refreshing; only iframe rendering via the URL was observed. Avoid claiming cross-session script execution without proof.
 - F-04 directory, acquisitions, legal, and PowerShell screenshots are uploaded and linked to the finding. The directory index request included a curl error 18 despite HTTP 200.
 - F-05 sanitized response comparison has been committed; original F-05 screenshots have not been uploaded.
-- Complete F-06 normal-customer administration page comparison; sanitize admin UI screenshot and registration request before publishing. The original registration screenshot exposed a disposable test password and security answer.
+- F-06 ordinary-customer route comparison is complete and documented. Sanitize the original admin UI screenshot and registration request before publishing images; the original request screenshot exposed a disposable test password and security answer.
 - Record the exact target image digest and application version.
 - Consider additional authorized access-control and injection scenarios, avoiding destructive operations.
 - Apply a consistent severity framework and calculate CVSS vectors when appropriate.
