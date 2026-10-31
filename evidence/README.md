@@ -15,6 +15,8 @@ This directory is reserved for **sanitized, human-reviewed** assessment evidence
 
 - [F05-password-recovery-api-comparison.md](F05-password-recovery-api-comparison.md) — sanitized, explicitly transcribed comparison of registered versus nonexistent account responses; **not an original network capture**; verified on GitHub 31 October 2026.
 
+- [F06-privilege-comparison-observations.md](F06-privilege-comparison-observations.md) — sanitized transcription of baseline registration, admin-role registration, admin UI access, and ordinary-customer 403 page; **not original screenshots**; committed 31 October 2026.
+
 ## Planned evidence (not yet uploaded):
 
 - `F06-registration-role-admin-redacted.png` — edited registration request and server-side `role:admin` response, with password and security answer hidden.
