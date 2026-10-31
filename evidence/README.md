@@ -17,6 +17,11 @@ This directory is reserved for **sanitized, human-reviewed** assessment evidence
 
 ## Planned evidence (not yet uploaded):
 
+- `F06-registration-role-admin-redacted.png` — edited registration request and server-side `role:admin` response, with password and security answer hidden.
+- `F06-administration-screen-redacted.png` — administration page screenshot; redact any user identifiers or other sensitive details.
+- `F06-customer-route-control-redacted.png` — ordinary customer access comparison to the same administration route.
+
+
 - `F01-login-request-redacted.png`
 - `F01-login-response-redacted.png`
 - `F01-admin-access-redacted.png`
