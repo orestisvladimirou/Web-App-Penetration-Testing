@@ -55,11 +55,13 @@ Severity is a **qualitative estimate** until an applicable CVSS vector is calcul
 - Never claim a fix has been implemented or verified solely from a recommendation.
 - Produce a final report only after reviewing all findings and evidence.
 
-## Current validated activity (30 October 2026)
+## Current validated activity (30–31 October 2026)
 
 - Passive reconnaissance captured HTTP requests from `localhost:3000`.
 - CORS header check: `Access-Control-Allow-Origin: *` observed on public homepage and product search API; exploitability not established.
-- Login test: an SQL injection payload in the login email field was followed by a successful administrator authentication response and Juice Shop's “Login Admin” completion banner. **A separate negative-control response has not yet been archived.**
+- Login test: an SQL injection payload in the login email field was followed by a successful administrator authentication response and Juice Shop's “Login Admin” completion banner. **A separate negative-control response was observed on 31 October 2026 (HTTP 401), but the sanitized screenshot has not yet been uploaded.**
+
+- Access-control test: Account A basket ID 6 and Account B basket ID 7 were observed. A request originating from Account B's authenticated capture was changed to GET basket 6 and returned HTTP 200 with Account A's basket contents. See [F-02](../findings/F02-idor-basket-access.md). The session token must be redacted in publication evidence.
 
 ## References
 
