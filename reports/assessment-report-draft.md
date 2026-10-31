@@ -100,17 +100,17 @@ Both the public homepage and product-search API returned `Access-Control-Allow-O
 ## Limitations and next actions
 
 - F-03 screenshot evidence has been uploaded and linked in the technical finding; visually review all evidence for residual secrets before publishing.
-- Upload a sanitized screenshot of the observed failed-login negative control (401 Unauthorized) for the SQL injection finding.
+- F-01 source screenshots of the SQL injection request, admin challenge and invalid-login 401 control are uploaded and linked. The successful-login JSON response screenshot containing a bearer token was intentionally excluded.
 - Save sanitized evidence tying the IDOR Requester session to Account B without exposing authentication tokens.
 - Documented F-03 negative follow-up: no JavaScript alert appeared in Incognito after dismissing the welcome dialog and refreshing; only iframe rendering via the URL was observed. Avoid claiming cross-session script execution without proof.
 - F-04 directory, acquisitions, legal, and PowerShell screenshots are uploaded and linked to the finding. The directory index request included a curl error 18 despite HTTP 200.
-- F-05 sanitized response comparison has been committed; original F-05 screenshots have not been uploaded.
-- F-06 ordinary-customer route comparison is complete and documented. Sanitize the original admin UI screenshot and registration request before publishing images; the original request screenshot exposed a disposable test password and security answer.
+- F-05 sanitized response comparison and two original cropped response screenshots (existing/nonexistent) are uploaded and linked.
+- F-06 ordinary-customer route comparison is complete and documented. Four original cropped/redacted registration and UI screenshots are uploaded and linked; passwords, answers, cookies and account lists were suppressed in the cropped views.
 - Docker image reference, repository-qualified digest, local image ID, Docker CLI version and running Juice Shop 20.3.0 are recorded in the environment fingerprint. A clean-environment reproduction of the pinned digest is still outstanding.
 - Consider additional authorized access-control and injection scenarios, avoiding destructive operations.
 - Apply a consistent severity framework and calculate CVSS vectors when appropriate.
 - Retest remediation only if a patched target is available.
-- Complete the [publication readiness checklist](publication-readiness-checklist.md), including redacted source evidence for F-01/F-06 and a final secrets review.
+- Complete the [publication readiness checklist](publication-readiness-checklist.md), including a final review of every image already committed and consistency/severity checks.
 - Convert this draft to a final report after completing and reviewing the assessment.
 
 ## Disclaimer
