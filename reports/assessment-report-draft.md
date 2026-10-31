@@ -1,9 +1,11 @@
-# Web Application Penetration Test — Interim Report
+# Web Application Penetration Test — Interim Working Draft (Superseded)
+
+> **Archived working document.** The completed and reviewed assessment is available in the **[Final Penetration Test Report v1.0](final-penetration-test-report.md)**, issued 31 October 2026. This interim file is retained for project history and may contain dated work-in-progress statements. Refer to the final report for current evidence, severity interpretations and limitations.
 
 **Assessment target:** OWASP Juice Shop, localhost-only Docker instance  
 **Assessment type:** Authorized educational security assessment  
 **Assessment dates:** 30–31 October 2026  
-**Report status:** DRAFT — investigation and evidence review are ongoing
+**Report status:** SUPERSEDED by final report v1.0 (31 October 2026)
 
 ## Executive summary
 
@@ -67,7 +69,7 @@ A SQL injection payload supplied as the email parameter in `POST /rest/user/logi
 
 After obtaining baseline basket IDs 6 (Account A) and 7 (Account B), the tester modified Account B's authenticated basket request to target `GET /rest/basket/6`. The local API returned HTTP 200 with Account A's basket ID, owner ID and Apple Juice / Banana Juice items. This demonstrated unauthorized read-only access; no basket modification was attempted.
 
-**Recommended fix:** check basket ownership against the authenticated principal on every object read and modification, and introduce cross-account negative tests. See [F-02](../findings/F02-idor-basket-access.md). The visible bearer token in the source screenshot must be redacted before publication.
+**Recommended fix:** check basket ownership against the authenticated principal on every object read and modification, and introduce cross-account negative tests. See [F-02](../findings/F02-idor-basket-access.md). The committed source screenshot has been reviewed and does not show the bearer-token value.
 
 ### F-03 — DOM XSS via product search
 
