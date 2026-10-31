@@ -55,7 +55,7 @@ The API should check that the authenticated principal owns basket ID 6. If Accou
 - The server returned **HTTP 200 OK** with `application/json`.
 - The response contained basket `id: 6`, `UserId: 25`, and products matching Account A's basket, including **Apple Juice** and **Banana Juice**.
 
-The successful response showing Account A's identifiable basket contents is stronger evidence than the status code alone. The screenshot of the modified request currently contains a visible bearer token and **must not be uploaded unredacted**.
+The successful response showing Account A's identifiable basket contents is stronger evidence than the status code alone. A redacted screenshot of the modified request has been uploaded; image pixels have not been independently re-inspected, so verify the redaction before making the repository public.
 
 ## Impact
 
@@ -82,7 +82,7 @@ The API appears to look up a basket using a client-supplied numeric ID without a
 |---|---|---|
 | F02-01 | Account A baseline: `GET /rest/basket/6`, products Apple Juice/Banana Juice | Captured in conversation; sanitized screenshot not uploaded |
 | F02-02 | Account B baseline: `GET /rest/basket/7`, normal account basket | Captured in conversation; sanitized screenshot not uploaded |
-| F02-03 | ZAP Requester: Bearer-authenticated `GET /rest/basket/6` returned 200 with Account A's products | Captured in conversation; **visible bearer token must be fully redacted** |
+| F02-03 | ZAP Requester: Bearer-authenticated `GET /rest/basket/6` returned 200 with Account A's products | [Redacted screenshot](../evidence/F02-cross-account-request-redacted.png) uploaded to GitHub on 31 October 2026; recheck token redaction before publication |
 | F02-04 | Independently saved proof that the Requester token belongs to Account B | Still to be documented without disclosing the token |
 
 ## Assessment limitations
@@ -91,7 +91,7 @@ The API appears to look up a basket using a client-supplied numeric ID without a
 - No state-changing operations on Account A's basket were attempted.
 - No patched build was tested; recommendations are **not verified fixes**.
 - Exact Juice Shop image version and digest remain to be recorded.
-- All evidence presently exists in test screenshots shared during development, **not as published image files in this repository**.
+- The F02-03 screenshot is committed in `evidence/`; baseline screenshots and independent Account B session attribution have not yet been uploaded.
 
 ## References
 
