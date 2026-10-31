@@ -53,7 +53,7 @@ After obtaining baseline basket IDs 6 (Account A) and 7 (Account B), the tester 
 
 ### F-03 — DOM XSS via product search
 
-The tester submitted a harmless iframe/JavaScript-alert payload into the product search box. A frame appeared in the search results, and Juice Shop displayed its successful **DOM XSS** challenge banner. A clean-browser trigger, cross-user delivery and practical confidentiality impact remain untested, so the definitive severity is reserved pending validation. See [F-03](../findings/F03-dom-based-xss-search.md).
+The tester submitted a harmless iframe/JavaScript-alert payload into the product search box. A frame appeared in the search results, and Juice Shop displayed its successful **DOM XSS** challenge banner. A separate Incognito session subsequently loaded the crafted `/#/search?q=...` URL and rendered the injected iframe without manual input, strengthening the link-triggered HTML-injection evidence. A JavaScript alert in Incognito, cross-user script execution and practical confidentiality impact were **not** independently observed, so final severity remains under review. See [F-03](../findings/F03-dom-based-xss-search.md).
 
 **Recommended fix:** use safe text DOM insertion rather than untrusted active HTML; avoid bypassing framework sanitization; add front-end regression tests.
 
@@ -66,7 +66,7 @@ Both the public homepage and product-search API returned `Access-Control-Allow-O
 - Add **redacted** screenshots and corresponding evidence register references, including the F-03 search/DOM XSS challenge screenshot.
 - Upload a sanitized screenshot of the observed failed-login negative control (401 Unauthorized) for the SQL injection finding.
 - Save sanitized evidence tying the IDOR Requester session to Account B without exposing authentication tokens.
-- Test whether a separate clean browser can trigger F-03 through an application-controlled search URL, without contacting external domains.
+- Separately confirm JavaScript execution in a fresh browser session for F-03 if appropriate, using a harmless local-only demonstration; only iframe rendering via the URL was observed in Incognito.
 - Record the exact target image digest and application version.
 - Consider additional authorized access-control and injection scenarios, avoiding destructive operations.
 - Apply a consistent severity framework and calculate CVSS vectors when appropriate.
