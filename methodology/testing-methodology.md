@@ -54,15 +54,17 @@ Severity is a **qualitative estimate** until an applicable CVSS vector is calcul
 - Propose fixes based on root cause rather than only blocking one payload.
 - Retest in a patched version if a locally controlled fix is available.
 - Never claim a fix has been implemented or verified solely from a recommendation.
-- Produce a final report only after reviewing all findings and evidence.
+- Produce a final report only after reviewing all findings and evidence. This was completed on 31 October 2026; see the [final report](../reports/final-penetration-test-report.md).
 
 ## Current validated activity (30–31 October 2026)
 
 - Passive reconnaissance captured HTTP requests from `localhost:3000`.
 - CORS header check: `Access-Control-Allow-Origin: *` observed on public homepage and product search API; exploitability not established.
-- Login test: an SQL injection payload in the login email field was followed by a successful administrator authentication response and Juice Shop's “Login Admin” completion banner. **A separate negative-control response was observed on 31 October 2026 (HTTP 401), but the sanitized screenshot has not yet been uploaded.**
+- Login test: an SQL injection payload in the login email field was followed by a successful administrator authentication response and Juice Shop's “Login Admin” completion banner. **A separate negative-control response (HTTP 401) and the redacted screenshot were recorded and uploaded on 31 October 2026.**
 
-- Access-control test: Account A basket ID 6 and Account B basket ID 7 were observed. A request originating from Account B's authenticated capture was changed to GET basket 6 and returned HTTP 200 with Account A's basket contents. See [F-02](../findings/F02-idor-basket-access.md). The session token must be redacted in publication evidence.
+- Access-control test: Account A basket ID 6 and Account B basket ID 7 were observed. A request originating from Account B's authenticated capture was changed to GET basket 6 and returned HTTP 200 with Account A's basket contents. See [F-02](../findings/F02-idor-basket-access.md). The published evidence screenshot masks the session-token value; session attribution is documented by the testing sequence rather than an independent token audit.
+
+- Other validated cases: F-03 client-side iframe markup rendering (script execution not reproduced in clean session); F-04 cookie-free confidential-marked file retrieval; F-05 recovery account enumeration; F-06 untrusted administrator-role assignment with normal-customer UI denial. See the [final assessment](../reports/final-penetration-test-report.md).
 
 ## References
 
