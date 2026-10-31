@@ -14,6 +14,7 @@ This directory is reserved for **sanitized, human-reviewed** assessment evidence
 - `F01-invalid-login-control-redacted.png`
 - `F02-account-a-basket-redacted.png`
 - `F02-account-b-basket-redacted.png`
+- `F03-dom-xss-search-redacted.png`
 
 Before adding evidence:
 1. Redact JWTs, bearer tokens, cookies, Authorization headers, real credentials, identifiers and unrelated personal information.
