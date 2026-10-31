@@ -2,7 +2,7 @@
 
 A structured, **authorized educational penetration testing assessment** of [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/) running in a local Docker container. The project demonstrates web security reconnaissance, HTTP analysis, manual exploitation validation, reporting, and remediation planning using the [OWASP Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) as a reference.
 
-> **Status: In progress.** Five findings are now documented in the local training target, including account enumeration through password recovery. Severity is provisional; F-04's unauthenticated document retrieval has now been verified. This is **not** an assessment of a production website or a third-party service.
+> **Status: In progress.** Six findings are now documented in the local training target, including administrator-role mass assignment during public registration. Severity is provisional; F-04's unauthenticated document retrieval has now been verified. This is **not** an assessment of a production website or a third-party service.
 
 ## Project at a glance
 
@@ -24,6 +24,7 @@ A structured, **authorized educational penetration testing assessment** of [OWAS
 | **F-03** | DOM XSS through product search | **Confirmed local proof of concept — severity under review** | [Technical finding](findings/F03-dom-based-xss-search.md) |
 | **F-04** | Exposed /ftp/ directory and confidential-marked acquisitions document | **Unauthenticated document access confirmed — Medium provisional** | [Technical finding](findings/F04-exposed-directory-confidential-document.md) |
 | **F-05** | Password recovery account enumeration and security question disclosure | **Confirmed — Low provisional** | [Technical finding](findings/F05-account-enumeration-password-recovery.md) |
+| **F-06** | Public registration accepts a client-controlled administrator role | **Confirmed role assignment — High provisional; customer access comparison pending** | [Technical finding](findings/F06-mass-assignment-admin-registration.md) |
 | **O-01** | Permissive CORS header on public endpoints | **Configuration observation; exploitability not shown** | [Observation](observations/O01-cors-configuration.md) |
 
 **F-01 evidence:** The login endpoint accepted an injection payload, issued an authentication response, and the browser displayed administrator identity with the Juice Shop “Login Admin” challenge completed. Sanitized evidence files have **not** yet been uploaded. A normal invalid-login control was observed returning HTTP 401 on 31 October 2026; its redacted screenshot remains to be uploaded.
@@ -74,7 +75,9 @@ For repeatable research, record the exact image version or digest before testing
 - [x] Upload and link four F-04 screenshots and PowerShell verification evidence
 - [x] Compare registered and nonexistent password recovery responses
 - [x] Document F-05 and commit a sanitized HTTP comparison
-- [ ] Test F-06 using a controlled assessment of another web security category
+- [x] Demonstrate public registration accepting `role:admin` and render the Administration interface
+- [x] Document F-06 with proof limitations
+- [ ] Compare the Administration route and data loading with an ordinary customer account
 - [ ] Review risks, recommendations and final report
 - [ ] Publish the repository after evidence and secrets review
 
