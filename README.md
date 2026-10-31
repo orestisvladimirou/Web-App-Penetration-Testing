@@ -27,7 +27,7 @@ A structured, **authorized educational penetration testing assessment** of [OWAS
 | **F-06** | Public registration accepts a client-controlled administrator role | **Confirmed role escalation and administration-route denial for customer — High provisional** | [Technical finding](findings/F06-mass-assignment-admin-registration.md) |
 | **O-01** | Permissive CORS header on public endpoints | **Configuration observation; exploitability not shown** | [Observation](observations/O01-cors-configuration.md) |
 
-**F-01 evidence:** The login endpoint accepted an injection payload, issued an authentication response, and the browser displayed administrator identity with the Juice Shop “Login Admin” challenge completed. Sanitized evidence files have **not** yet been uploaded. A normal invalid-login control was observed returning HTTP 401 on 31 October 2026; its redacted screenshot remains to be uploaded.
+**F-01 evidence:** The login endpoint accepted an injection payload, issued an authentication response, and the browser displayed administrator identity with the Juice Shop “Login Admin” challenge completed. Sanitized screenshots of the injection request, administrator challenge completion and HTTP 401 invalid-login negative control are now uploaded and linked in [F-01](findings/F01-sql-injection-authentication-bypass.md). The successful-login response image containing a JWT was not published.
 
 ## Methodology and documentation
 
@@ -62,7 +62,7 @@ Navigate to <http://localhost:3000>. If the container already exists but is stop
 - [x] Capture and triage initial application traffic
 - [x] Manually confirm an authentication bypass via SQL injection
 - [x] Validate and downgrade the initial CORS scanner finding to an observation
-- [ ] Save and redact screenshots, including a negative control
+- [x] Upload sanitized F-01 request, challenge-completion, and HTTP 401 negative-control screenshots
 - [x] Record Docker CLI version, configured image reference and local image ID
 - [x] Verify Juice Shop version 20.3.0 and the repository digest reported by Docker; document a pinned reproduction command
 - [ ] Verify the pinned image pulls and runs on a separate clean environment
@@ -82,7 +82,8 @@ Navigate to <http://localhost:3000>. If the container already exists but is stop
 - [x] Demonstrate public registration accepting `role:admin` and render the Administration interface
 - [x] Document F-06 with proof limitations
 - [x] Compare Administration route in ordinary customer account: browser shows 403 denial
-- [ ] Save redacted F-06 image evidence and optionally validate underlying admin API authorization
+- [x] Upload sanitized F-06 normal and elevated registration evidence, administration UI, and customer-denial screenshots
+- [ ] Optionally validate backend administrator API permissions without performing state-changing actions
 - [x] Inventory evidence gaps, verify repository privacy and create publication readiness checklist
 - [ ] Review risks, recommendations and final report
 - [ ] Publish the repository after evidence and secrets review
