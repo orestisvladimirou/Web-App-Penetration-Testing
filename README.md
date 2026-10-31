@@ -44,14 +44,14 @@ Findings distinguish **scanner alerts**, **configuration observations**, and **m
 Install Docker Desktop, run the container bound to the local loopback interface, and open the URL shown below.
 
 ```powershell
-docker pull bkimminich/juice-shop
-docker run -d --name juice-shop-lab -p 127.0.0.1:3000:3000 bkimminich/juice-shop
+docker pull bkimminich/juice-shop@sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4
+docker run -d --name juice-shop-lab -p 127.0.0.1:3000:3000 bkimminich/juice-shop@sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4
 docker ps --filter "name=juice-shop-lab"
 ```
 
 Navigate to <http://localhost:3000>. If the container already exists but is stopped, use `docker start juice-shop-lab`.
 
-**Recorded environment (31 October 2026):** The container was created from `bkimminich/juice-shop` (no explicit tag). Its verified **local image ID** is `sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4`; Docker is version `29.9.2`, build `a82e528`; ZAP is version `2.17.0`. This image ID is **not** a registry manifest digest, and the exact Juice Shop application version is not yet recorded. See the [environment fingerprint](scope/environment-fingerprint.md) for capture commands and remaining version checks.
+**Recorded environment (31 October 2026):** The existing container was originally created from `bkimminich/juice-shop` (no explicit tag). The running application reported **Juice Shop 20.3.0**. Docker's `RepoDigests` field reported `bkimminich/juice-shop@sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4`; the local image ID was `sha256:42843723a7bf4246aa5d63c324978b17ef296ac78434aeddd34c427bfb5853f4`. These fields happened to have the same SHA-256 value in the observed output but represent different concepts. Docker CLI: `29.9.2` (build `a82e528`); ZAP: `2.17.0`. The reproduction commands above use the recorded repository digest; a clean-machine reproduction has not yet been independently tested. [Environment fingerprint](scope/environment-fingerprint.md).
 
 **ZAP scope:** Include only `^http://localhost:3000(?:/.*)?$` in the dedicated context, put only that context in scope, and select **Protected Mode** before any active scanning. The assessment so far used manual browsing, passive capture, and a targeted local login test.
 
@@ -63,7 +63,8 @@ Navigate to <http://localhost:3000>. If the container already exists but is stop
 - [x] Validate and downgrade the initial CORS scanner finding to an observation
 - [ ] Save and redact screenshots, including a negative control
 - [x] Record Docker CLI version, configured image reference and local image ID
-- [ ] Verify Juice Shop application version and registry manifest digest; pin exact version for reproducibility
+- [x] Verify Juice Shop version 20.3.0 and the repository digest reported by Docker; document a pinned reproduction command
+- [ ] Verify the pinned image pulls and runs on a separate clean environment
 - [x] Demonstrate cross-account basket disclosure (IDOR) using two disposable lab accounts
 - [x] Document the confirmed IDOR finding
 - [ ] Capture redacted proof of Account B session attribution for the IDOR request
