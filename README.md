@@ -2,7 +2,7 @@
 
 A structured, **authorized educational penetration testing assessment** of [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/) running in a local Docker container. The project demonstrates web security reconnaissance, HTTP analysis, manual exploitation validation, reporting, and remediation planning using the [OWASP Web Security Testing Guide](https://owasp.org/www-project-web-security-testing-guide/) as a reference.
 
-> **Status: In progress.** Three vulnerability behaviors plus an exposed confidential-marked document and file listing have been demonstrated in the local training target. Severity is provisional; the F-04 anonymous-access control remains pending. This is **not** an assessment of a production website or a third-party service.
+> **Status: In progress.** Three vulnerability behaviors plus an exposed confidential-marked document and file listing have been demonstrated in the local training target. Severity is provisional; F-04's unauthenticated document retrieval has now been verified. This is **not** an assessment of a production website or a third-party service.
 
 ## Project at a glance
 
@@ -22,7 +22,7 @@ A structured, **authorized educational penetration testing assessment** of [OWAS
 | **F-01** | SQL injection leading to administrator authentication bypass | **Confirmed — High (qualitative)** | [Technical finding](findings/F01-sql-injection-authentication-bypass.md) |
 | **F-02** | Cross-account basket disclosure through insecure direct object reference (IDOR) | **Confirmed — Medium (qualitative)** | [Technical finding](findings/F02-idor-basket-access.md) |
 | **F-03** | DOM XSS through product search | **Confirmed local proof of concept — severity under review** | [Technical finding](findings/F03-dom-based-xss-search.md) |
-| **F-04** | Exposed /ftp/ directory and confidential-marked acquisitions document | **Exposure confirmed — anonymous control pending, Medium provisional** | [Technical finding](findings/F04-exposed-directory-confidential-document.md) |
+| **F-04** | Exposed /ftp/ directory and confidential-marked acquisitions document | **Unauthenticated document access confirmed — Medium provisional** | [Technical finding](findings/F04-exposed-directory-confidential-document.md) |
 | **O-01** | Permissive CORS header on public endpoints | **Configuration observation; exploitability not shown** | [Observation](observations/O01-cors-configuration.md) |
 
 **F-01 evidence:** The login endpoint accepted an injection payload, issued an authentication response, and the browser displayed administrator identity with the Juice Shop “Login Admin” challenge completed. Sanitized evidence files have **not** yet been uploaded. A normal invalid-login control was observed returning HTTP 401 on 31 October 2026; its redacted screenshot remains to be uploaded.
@@ -69,7 +69,8 @@ For repeatable research, record the exact image version or digest before testing
 - [ ] Independently validate script execution in a separate session before assigning F-03 final severity
 - [x] Discover exposed directory listing and confidential-marked document at /ftp/
 - [x] Document F-04 with limits of evidence
-- [ ] Capture fresh cookie-free HTTP checks for F-04
+- [x] Verify credential-free HTTP 200 and confidential text retrieval for F-04; `/ftp/` returned HTTP 200 with an incomplete-transfer warning
+- [ ] Upload sanitized F-04 screenshots and PowerShell verification evidence
 - [ ] Review risks, recommendations and final report
 - [ ] Publish the repository after evidence and secrets review
 
