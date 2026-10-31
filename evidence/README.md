@@ -13,6 +13,8 @@ This directory is reserved for **sanitized, human-reviewed** assessment evidence
 - [F04-unauthenticated-verification.png](F04-unauthenticated-verification.png) — credential-free HTTP checks including an incomplete-transfer warning for the directory; upload verified 31 October 2026.
 - [F04-legal-document.png](F04-legal-document.png) — initial terms-of-use route; upload verified 31 October 2026.
 
+- [F05-password-recovery-api-comparison.md](F05-password-recovery-api-comparison.md) — sanitized, explicitly transcribed comparison of registered versus nonexistent account responses; **not an original network capture**; verified on GitHub 31 October 2026.
+
 ## Planned evidence (not yet uploaded):
 
 - `F01-login-request-redacted.png`
